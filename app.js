@@ -1,15 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 
 app.use(
     cors(),
+    bodyParser.urlencoded({extended: false}),
     express.static('public'),
 );
 
-app.get('/test', (req, res) => {
-    let obj = {a: 3, b: 76, c: 10};
-    res.send(JSON.stringify(obj));
+app.post('/test', bodyParser.json(), (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
 });
 
 app.get('/add/:a/:b', (req, res) => {
