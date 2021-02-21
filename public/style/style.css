@@ -1,0 +1,36 @@
+body {
+  background: #144891;
+}
+
+.view_button {
+  width: 70px;
+  border-radius: 20px;
+  border: 0px;
+}
+
+.matrix_calc, .vector_calc {
+  display: none;
+}
+
+.matrix_input, .vector_input  {
+  width: 30px;
+  margin: 1px;
+}
+
+.calc_buttons {
+  margin-top: 10px;
+}
+
+.calc_button {
+  width: 40px;
+  border-radius: 20px;
+  border: 0px;
+}
+
+#increase_matrix, #decrease_matrix, #increase_vector, #decrease_vector {
+  width: 150px;
+}
+
+#scal_mult, #vect_mult {
+  display: none;
+}

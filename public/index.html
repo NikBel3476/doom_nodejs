@@ -4,10 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="modules/calc.js"></script>
+    <title>Simple calculator</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <h1>Nodejs server</h1>
+    <div style="margin-bottom: 10px">
+        <input type="button" value="Числа" class="view_button" id="show_number">
+        <input type="button" value="Векторы" class="view_button" id="show_vector">
+        <input type="button" value="Матрицы" class="view_button" id="show_matrix">
+    </div>
+    <!-- ЧИСЛА -->
+    <div class="number_calc">
+        <div style="display: inline-block">
+            <h3 style="text-align: center;">Число 1</h3>
+            <input type="text" class="number_input">
+        </div>
+        <div style="display: inline-block">
+            <h3 style="text-align: center;">Число 2</h3>
+            <input type="text" class="number_input">
+        </div>
+    </div>
+    <!-- ВЕКТОРЫ -->
+    <div class="vector_calc">
+        <div>
+            <input type='button' id='increase_vector' class='calc_button' value='увеличить векторы'></input>
+            <input type='button' id='decrease_vector' class='calc_button' value='уменьшить векторы'></input>
+        </div>
+        <div style="display: inline-block">
+            <h3 style="text-align: center;">Вектор 1</h3>
+            <div id="vector_1" class="matrix"></div>
+        </div>
+        <div style="display: inline-block">
+            <h3 style="text-align: center;">Вектор 2</h3>
+            <div id="vector_2" class="matrix"></div>
+        </div>
+    </div>
+    <!-- МАТРИЦЫ -->
+    <div class="matrix_calc">
+        <div>
+            <input type='button' id='increase_matrix' class='calc_button' value='увеличить матрицы'></input>
+            <input type='button' id='decrease_matrix' class='calc_button' value='уменьшить матрицы'></input>
+        </div>
+        <div style="display: inline-block">
+            <h3 style="text-align: center;">Матрица 1</h3>
+            <div id="matrix_1" class="matrix"></div>
+        </div>
+        <div style="display: inline-block">
+            <h3 style="text-align: center;">Матрица 2</h3>
+            <div id="matrix_2" class="matrix"></div>
+        </div>
+    </div>
+    <div class="calc_buttons">
+        <input type='button' id='sum' class='calc_button' value='+'></input>
+        <input type='button' id='sub' class='calc_button' value='-'></input>
+        <input type='button' id='mult' class='calc_button' value='*'></input>
+        <input type='button' id='divis' class='calc_button' value='/'></input>
+        <input type='button' id='scal_mult' class='calc_button' value='*(С)'></input>
+        <input type='button' id='vect_mult' class='calc_button' value='*(В)'></input>
+    </div>
+    <script src="js/Main.js"></script>
+    <script src="js/Server.js"></script>
+    <script src="js/UI.js"></script>
 </body>
 </html>
