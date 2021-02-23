@@ -31,12 +31,12 @@ function Router({ calculator }) {
     });
 
     router.post('/scalMult', bodyParser.json(), (req, res) => {
-        let result = JSON.stringify(calculator.divis(req.body));
+        let result = JSON.stringify(calculator.scalMult(req.body));
         res.send(answer.good(result));
     });
 
     router.post('/vectMult', bodyParser.json(), (req, res) => {
-        let result = JSON.stringify(calculator.divis(req.body));
+        let result = JSON.stringify(calculator.vectMult(req.body));
         res.send(answer.good(result));
     });
     
