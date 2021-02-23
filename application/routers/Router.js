@@ -8,8 +8,35 @@ function Router({ calculator }) {
 
     const answer = new Answer;
 
-    router.post('/calculate', bodyParser.json(), (req, res) => {
-        let result = JSON.stringify(calculator.calc(req.body));
+    router.post('/sum', bodyParser.json(), (req, res) => {
+        let value = req.body;
+        let result = JSON.stringify(calculator.sum(value));
+        res.send(answer.good(result));
+    });
+
+    router.post('/sub', bodyParser.json(), (req, res) => {
+        let result = JSON.stringify(calculator.sub(req.body));
+        res.send(answer.good(result));
+    });
+
+    router.post('/mult', bodyParser.json(), (req, res) => {
+        let value = req.body;
+        let result = JSON.stringify(calculator.mult(value));
+        res.send(answer.good(result));
+    });
+
+    router.post('/divis', bodyParser.json(), (req, res) => {
+        let result = JSON.stringify(calculator.divis(req.body));
+        res.send(answer.good(result));
+    });
+
+    router.post('/scalMult', bodyParser.json(), (req, res) => {
+        let result = JSON.stringify(calculator.divis(req.body));
+        res.send(answer.good(result));
+    });
+
+    router.post('/vectMult', bodyParser.json(), (req, res) => {
+        let result = JSON.stringify(calculator.divis(req.body));
         res.send(answer.good(result));
     });
     

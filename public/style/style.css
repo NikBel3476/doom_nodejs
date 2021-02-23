@@ -2,6 +2,10 @@ body {
   background: #144891;
 }
 
+h3 {
+  margin: 10px;
+}
+
 .view_button {
   width: 70px;
   border-radius: 20px;
@@ -12,9 +16,16 @@ body {
   display: none;
 }
 
+.vector, .matrix {
+  margin: 5px;
+  letter-spacing: -.36em;
+}
+
 .matrix_input, .vector_input  {
+  border: 0px;
   width: 30px;
   margin: 1px;
+  padding: 0px;
 }
 
 .calc_buttons {

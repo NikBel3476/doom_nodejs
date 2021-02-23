@@ -1,18 +1,32 @@
 class UI {
   constructor() {
     this.type = 'number';
-    this.vectorId_1 = 'vector_1';
-    this.vectorId_2 = 'vector_2';
     this.vectorSize = 3;
-
-    this.matrixId_1 = 'matrix_1';
-    this.matrixId_2 = 'matrix_2';
     this.matrixSize = 3;
-    this.matrixValues = document.getElementsByClassName('matrix_values');
+
+    this.divNumberCalcId = 'number_calc';
+    this.divVectorCalcId = 'vector_calc';
+    this.divMatrixCalcId = 'matrix_calc';
+    this.divVectorId_1 = 'vector_1';
+    this.divVectorId_2 = 'vector_2';
+    this.divMatrixId_1 = 'matrix_1';
+    this.divMatrixId_2 = 'matrix_2';
+
+    this.numInputId = 'number_input';
+    this.vectInputId = 'vector_input';
+    this.matrixInputId = 'matrix_input';
+    this.vectInputClassName = 'vector_input';
+
+    this.sumButtonId = 'sum';
+    this.subButtonId =  'sub';
+    this.multButtonId = 'mult';
+    this.divisButtonId = 'divis';
+    this.scalMultButtonId = 'scal_mult';
+    this.vectMultButtonId = 'vect_mult';
   }
   
   // ------------- ВЕКТОРЫ -------------- //
-  addVector(parentId) {
+  addVector = (parentId) => {
     let vectorDiv = document.getElementById(parentId);
     let className = 'vector_input';
 
@@ -23,41 +37,40 @@ class UI {
     }
   }
 
-  incVector() {
-    let vectorDiv = document.getElementById('vector_1');
+  incVector = () => {
+    let vectorDiv = document.getElementById(this.divVectorId_1);
     let input = document.createElement("input");
-    input.className = 'vector_input';
+    input.className = this.vectInputClassName;
     vectorDiv.append(input);
-    let vectorDiv2 = document.getElementById('vector_2');
+    let vectorDiv2 = document.getElementById(this.divVectorId_2);
     input = document.createElement("input");
-    input.className = 'vector_input';
+    input.className = this.vectInputClassName;
     vectorDiv2.append(input);
     this.vectorSize++;
     if (this.vectorSize === 3) {
-      this.showElemById('vect_mult');
+      this.showElemById(this.vectMultButtonId);
     } else {
-      this.hideElemById('vect_mult');
+      this.hideElemById(this.vectMultButtonId);
     }
   }
 
-  decVector() {
+  decVector = () => {
     if (this.vectorSize > 2) {
-      let vectorDiv = document.getElementById('vector_1');
-      let vectorDiv2 = document.getElementById('vector_2');
+      let vectorDiv = document.getElementById(this.divVectorId_1);
+      let vectorDiv2 = document.getElementById(this.divVectorId_2);
       vectorDiv.children[vectorDiv.children.length - 1].remove();
       vectorDiv2.children[vectorDiv2.children.length - 1].remove();
       this.vectorSize--;
       if (this.vectorSize === 3) {
-        this.showElemById('vect_mult');
+        this.showElemById(this.vectMultButtonId);
       } else {
-        this.hideElemById('vect_mult');
+        this.hideElemById(this.vectMultButtonId);
       }
     }
   }
 
-  deleteMatrix() {
-    document.getElementById('matrix_1').innerHTML = "";
-    document.getElementById('matrix_2').innerHTML = "";
+  clearElemById = (id) => {
+    document.getElementById(id).innerHTML = "";
   }
 
   getVectorSize = () => this.vectorSize;
@@ -67,7 +80,27 @@ class UI {
     console.log(values);
   }
   // ------------- МАТРИЦЫ -------------- //
-  addMatrix(parentId) {
+  getMatrixSize = () => this.matrixSize;
+
+  incMatrix = () => {
+    this.clearElemById(this.divMatrixId_1);
+    this.clearElemById(this.divMatrixId_2);
+    this.matrixSize++;
+    this.addMatrix(this.divMatrixId_1);
+    this.addMatrix(this.divMatrixId_2);
+  }
+
+  decMatrix = () => {
+    if (this.matrixSize > 2) {
+      this.clearElemById(this.divMatrixId_1);
+      this.clearElemById(this.divMatrixId_2);
+      this.matrixSize--;
+      this.addMatrix(this.divMatrixId_1);
+      this.addMatrix(this.divMatrixId_2);
+    }
+  }
+
+  addMatrix = (parentId) => {
     let matrixDiv = document.getElementById(parentId);
     let className = 'matrix_input';
 
@@ -82,31 +115,24 @@ class UI {
     }
   }
 
-  incMatrix() {
-    this.deleteMatrix();
-    this.matrixSize++;
-    this.addMatrix(this.matrixId_1);
-    this.addMatrix(this.matrixId_2);
+  deleteMatrix = () => {
+    document.getElementById(this.matrixId_1).innerHTML = "";
+    document.getElementById(this.matrixId_2).innerHTML = "";
   }
 
-  decMatrix() {
-    if (this.matrixSize > 2) {
-      this.deleteMatrix();
-      this.matrixSize--;
-      this.addMatrix(this.matrixId_1);
-      this.addMatrix(this.matrixId_2);
+  takeValues = () => {
+    switch(this.type) {
+      case 'number': 
+        return this.takeNumberValues()
+      case 'vector': 
+        return this.takeVectorValues()
+      case 'matrix': 
+        return this.takeMatrixValues()
     }
   }
 
-  deleteMatrix() {
-    document.getElementById('matrix_1').innerHTML = "";
-    document.getElementById('matrix_2').innerHTML = "";
-  }
-
-  getMatrixSize = () => this.matrixSize;
-
   takeNumberValues = () => {
-    let inputs = document.getElementsByClassName('number_input');
+    let inputs = document.getElementsByClassName(this.numInputId);
       let values = [];
       for (let i = 0; i < inputs.length; i++) {
         values.push(inputs[i].value);
@@ -115,7 +141,7 @@ class UI {
   }
 
   takeVectorValues = () => {
-    let inputs = document.getElementsByClassName("vector_input");
+    let inputs = document.getElementsByClassName(this.vectInputId);
     let values = [];
     for (let i = 0; i < inputs.length; i++) {
       values.push(inputs[i].value);
@@ -124,7 +150,7 @@ class UI {
   }
 
   takeMatrixValues = () => {
-    let inputs = document.getElementsByClassName("matrix_input");
+    let inputs = document.getElementsByClassName(this.matrixInputId);
     let values = [];
     for (let i = 0; i < inputs.length; i++) {
       values.push(inputs[i].value);
@@ -132,78 +158,70 @@ class UI {
     return values;
   }
 
-  takeValues() {
-    switch(this.type) {
-      case 'number':
-        return {
-          values: this.takeNumberValues(),
-          type: this.type
-        };
-      case 'vector':
-        return {
-          values: this.takeVectorValues(),
-          type: this.type
-        };
-      case 'matrix':
-        return {
-          values: this.takeMatrixValues(),
-          type: this.type
-        };
-    }
-  }
-
   // отображение
-  changeView(name) {
+  showDiv = (name) => {
     switch(name) {
       case 'number':
-        this.hideElem('vector_calc');
-        this.hideElem('matrix_calc');
-        this.showElem('number_calc');
-        this.hideElemById('scal_mult');
-        this.hideElemById('vect_mult');
-        this.showElemById('mult');
-        this.showElemById('divis');
+        this.showNumber();
         this.type = 'number';
         break;
       case 'vector':
-        this.hideElem('number_calc');
-        this.hideElem('matrix_calc');
-        this.showElem('vector_calc');
-        this.showElemById('scal_mult');
-        this.showElemById('vect_mult');
-        this.hideElemById('mult');
-        this.hideElemById('divis');
+        this.showVector();
         this.type = 'vector';
         break;
       case 'matrix':
-        this.hideElem('number_calc');
-        this.hideElem('vector_calc');
-        this.showElem('matrix_calc');
-        this.hideElemById('scal_mult');
-        this.hideElemById('vect_mult');
-        this.showElemById('mult');
-        this.hideElemById('divis');
+        this.showMatrix();
         this.type = 'matrix';
         break;
     }
   }
 
-  showElem(className) {
+  showNumber = () => {
+    this.hideElem(this.divVectorCalcId);
+    this.hideElem(this.divMatrixCalcId);
+    this.showElem(this.divNumberCalcId);
+    this.hideElemById(this.scalMultButtonId);
+    this.hideElemById(this.vectMultButtonId);
+    this.showElemById(this.multButtonId);
+    this.showElemById(this.divisButtonId);
+  }
+
+  showVector = () => {
+    this.hideElem(this.divNumberCalcId);
+    this.hideElem(this.divMatrixCalcId);
+    this.showElem(this.divVectorCalcId);
+    this.showElemById(this.scalMultButtonId);
+    this.showElemById(this.vectMultButtonId);
+    this.hideElemById(this.multButtonId);
+    this.hideElemById(this.divisButtonId);
+  }
+
+  showMatrix = () => {
+    this.hideElem(this.divNumberCalcId);
+    this.hideElem(this.divVectorCalcId);
+    this.showElem(this.divMatrixCalcId);
+    this.hideElemById(this.scalMultButtonId);
+    this.hideElemById(this.vectMultButtonId);
+    this.showElemById(this.multButtonId);
+    this.hideElemById(this.divisButtonId);
+  }
+
+  showElem = (className) => {
     let elem = document.getElementsByClassName(className);
     elem[0].style.display = 'block';
   }
 
-  hideElem(className) {
+  hideElem = (className) => {
     let elem = document.getElementsByClassName(className);
     elem[0].style.display = 'none';
   }
 
-  showElemById(id) {
+  showElemById = (id) => {
     let elem = document.getElementById(id);
     elem.style.display = 'inline';
   }
 
-  hideElemById(id) {
+  hideElemById = (id) => {
     let elem = document.getElementById(id);
     elem.style.display = 'none';
   }
