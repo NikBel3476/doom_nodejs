@@ -38,6 +38,10 @@ h3 {
   border: 0px;
 }
 
+.chat_container {
+  margin-top: 15px;
+}
+
 #increase_matrix, #decrease_matrix, #increase_vector, #decrease_vector {
   width: 150px;
 }
