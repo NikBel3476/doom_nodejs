@@ -1,6 +1,11 @@
 window.onload = function() {
     const ui = new UI();
     const server = new Server();
+////////////////////////////////////////////////////////////
+
+    const socket = new WebSocket("ws://localhost:3003");
+
+////////////////////////////////////////////////////////////
 
     // переключение
     document.getElementById('show_number').addEventListener(
@@ -44,6 +49,29 @@ window.onload = function() {
     document.getElementById('vect_mult').addEventListener(
         'click', () => getResult('vectMult')
     );
+
+////////////////////// чатик //////////////////
+
+// отправка сообщений
+    document.getElementById('sendText').addEventListener(
+        'click', () => {
+            let valueTextLine =  document.getElementById('textLine').value;
+            socket.send(valueTextLine);
+            return true;
+        }
+    );
+
+// обработка входящих
+    socket.onmessage = (event) => {
+        let message = event.data;
+        showMessage(message);
+    };
+
+    function showMessage(elem) {
+        console.log(elem);
+    };
+
+///////////////////////////////////////////////
 
     async function getResult(method) {
         let data = takeValues();
