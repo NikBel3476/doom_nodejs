@@ -5,14 +5,14 @@ class Chat {
         this.users = [];
         // обработчик соединения для КАЖДОГО клиента
         io.on('connection', socket => {
-            socket.on(MESSAGES.SEND_MESSAGE, data => this.sendMessage(data));
+            socket.on(MESSAGES.SEND_MESSAGE, data => this.sendMessage(data, socket));
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
     }
 
-    sendMessage(data) {
-        this.io.emit(this.MESSAGES.SEND_MESSAGE, data);
+    sendMessage(data, socket) {
+        socket.emit(this.MESSAGES.SEND_MESSAGE, data);
     }
 }
 

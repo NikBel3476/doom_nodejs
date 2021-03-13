@@ -3,7 +3,13 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const app = express(); // create server
 const server = http.createServer(app);
-const io = require('socket.io')(server); // append sockets
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "http://localhost:4200",
+        methods: ["GET", "POST"],
+    }
+}); // append sockets
+const cors = require('cors');
 
 const SETTINGS = require('./settings');
 const { PORT, MESSAGES } = SETTINGS;
@@ -22,7 +28,8 @@ const router = new Router({ });
 
 app.use(
     bodyParser.urlencoded({ extended: false }),
-    express.static(__dirname + '/public')
+    express.static(__dirname + '/public'),
+    cors(),
 );
 
 app.use('/', router);
