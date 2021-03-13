@@ -1,0 +1,99 @@
+body {
+  background: #b9b9b9;
+}
+
+h3 {
+  margin: 10px;
+}
+
+input:focus, input:active, textarea {
+  outline: none;
+}
+
+.view_button {
+  width: 70px;
+  border-radius: 20px;
+  border: 0px;
+}
+
+.matrix_calc, .vector_calc {
+  display: none;
+}
+
+.vector, .matrix {
+  margin: 5px;
+  letter-spacing: -.36em;
+}
+
+.matrix_input, .vector_input  {
+  border: 0px;
+  width: 30px;
+  margin: 1px;
+  padding: 0px;
+}
+
+.calc_buttons {
+  margin-top: 10px;
+}
+
+.calc_button {
+  width: 40px;
+  border-radius: 20px;
+  border: 0px;
+}
+
+.result_div {
+  width: 350px;
+  text-align: center;
+}
+
+.chat_container {
+  margin-top: 15px;
+  width: 350px;
+  text-align: center;
+  display: none;
+}
+
+.reg_container {
+  margin-top: 50px;
+  width: 350px;
+  text-align: center;
+}
+
+.chat_h1 {
+  display: inline-block;
+  width: 30%;
+  margin: 5px;
+}
+
+#increase_matrix, #decrease_matrix, #increase_vector, #decrease_vector {
+  width: 150px;
+}
+
+#scal_mult, #vect_mult {
+  display: none;
+}
+
+#result_area {
+  width: 150px;
+  height: 50px;
+}
+
+#chat {
+  resize: none;
+}
+
+#sendText {
+  border: 0px;
+  border-radius: 20px;
+  margin: 3px;
+}
+
+#reg_input {
+  display: inline-block;
+}
+
+#reg_button {
+  border: none;
+  border-radius: 20px;
+}
