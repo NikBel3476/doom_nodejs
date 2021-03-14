@@ -1,7 +1,11 @@
 class Users {
-    constructor({ io, MESSAGES }) {
+
+    md5 = require('md5');
+
+    constructor({ io, MESSAGES, db }) {
         this.io = io;
         this.MESSAGES = MESSAGES;
+        this.db = db;
         this.users = [];
         // обработчик соединения для КАЖДОГО клиента
         io.on('connection', socket => {
@@ -13,12 +17,33 @@ class Users {
         });
     }
 
-    login(data, socket) {
+    /* login(data, socket) {
+        const { login, passHash, token, num } = data;
+        console.log(data);
+        if (login && passHash && token && num) {
+            if (token === this.md5(passHash + num)) {
+                const result = this.db.addUser(login, passHash, token);
+                console.log(result);
+                socket.emit(this.MESSAGES.REGISTRATION, data);
+            }
+        }
         socket.emit(this.MESSAGES.LOGIN, data);
-    }
+    } */
 
-    registrtion(data, socket) {
-        socket.emit(this.MESSAGES.REGISTRATION, data);
+    async registrtion(data, socket) {
+        const { login, nickname, passHash, token, num } = data;
+        console.log(data);
+        if (login && nickname && passHash && token && num) {
+            if (token === this.md5(passHash + num)) {
+                const user = await this.db.getUserByLogin(login, this.registrationAnswer);
+                if (!user) {
+                    const result = this.db.addUser(login, nickname, passHash, token);
+                    if (result) {
+                        socket.emit(this.MESSAGES.REGISTRATION, token);
+                    }
+                }
+            }
+        }
     }
 }
 

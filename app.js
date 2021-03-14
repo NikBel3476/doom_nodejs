@@ -8,8 +8,7 @@ const io = require('socket.io')(server, {
         origin: "http://localhost:4200",
         methods: ["GET", "POST"],
     }
-}); // append sockets
-const cors = require('cors');
+});
 
 const SETTINGS = require('./settings');
 const { PORT, MESSAGES } = SETTINGS;
@@ -29,9 +28,8 @@ const router = new Router({ });
 app.use(
     bodyParser.urlencoded({ extended: false }),
     express.static(__dirname + '/public'),
-    cors(),
 );
 
 app.use('/', router);
 
-server.listen(PORT, () => console.log(`Server running at port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running at port ${PORT}. http://localhost:3001`));
