@@ -52,7 +52,6 @@ class DB {
         );
         return result;
     }
-
 }
 
 module.exports = DB;
