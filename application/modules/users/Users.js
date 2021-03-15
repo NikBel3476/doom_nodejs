@@ -9,7 +9,6 @@ class Users {
         this.users = [];
         // обработчик соединения для КАЖДОГО клиента
         io.on('connection', socket => {
-            socket.on(MESSAGES.SEND_LOGIN, data => this.checkLogin(data, socket));
             socket.on(MESSAGES.LOGIN, data => this.login(data, socket));
             socket.on(MESSAGES.REGISTRATION, data => this.registrtion(data, socket));
 
@@ -17,27 +16,29 @@ class Users {
         });
     }
 
-    /* login(data, socket) {
+    async login(data, socket) {
         const { login, passHash, token, num } = data;
-        console.log(data);
         if (login && passHash && token && num) {
             if (token === this.md5(passHash + num)) {
-                const result = this.db.addUser(login, passHash, token);
-                console.log(result);
-                socket.emit(this.MESSAGES.REGISTRATION, data);
+                const user = await this.db.getUserByLogin(login);
+                if (user && passHash === user.password) {
+                    const result = this.db.updateUserToken(user.id, token);
+                    if (result) {
+                        this.db.changeUserStatus(user.id, 'online');
+                        socket.emit(this.MESSAGES.LOGIN, token);
+                    }
+                }
             }
         }
-        socket.emit(this.MESSAGES.LOGIN, data);
-    } */
+    }
 
     async registrtion(data, socket) {
         const { login, nickname, passHash, token, num } = data;
-        console.log(data);
         if (login && nickname && passHash && token && num) {
             if (token === this.md5(passHash + num)) {
-                const user = await this.db.getUserByLogin(login, this.registrationAnswer);
+                const user = await this.db.getUserByLogin(login);
                 if (!user) {
-                    const result = this.db.addUser(login, nickname, passHash, token);
+                    const result = await this.db.addUser(login, nickname, passHash, token);
                     if (result) {
                         socket.emit(this.MESSAGES.REGISTRATION, token);
                     }
