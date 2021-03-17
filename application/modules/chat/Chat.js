@@ -17,8 +17,6 @@ class Chat {
             const { message, token } = data;
             const user = await this.db.getUserByToken(token);
             if (user) {
-                console.log(user);
-                console.log(data);
                 const date = new Date();
                 const arr = date.toLocaleString("ru").split(' ');
                 const messageDate = arr[0];
