@@ -3,7 +3,7 @@ const SETTINGS = {
 
     // все события, котореы есть в сокетах
     MESSAGES: {
-        GET_MESSAGES: 'GET_MESSAGES', // получить все сообщения
+        GET_MESSAGE: 'GET_MESSAGE', // получить все сообщения
         SEND_MESSAGE: 'SEND_MESSAGE', // послать сообщение
         LOGIN: 'LOGIN',
         REGISTRATION: 'REGISTRATION'

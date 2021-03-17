@@ -6,25 +6,34 @@ class Chat {
         this.db = db;
         // обработчик соединения для КАЖДОГО клиента
         io.on('connection', socket => {
-            socket.on(MESSAGES.SEND_MESSAGE, data => this.sendMessage(data, socket));
+            socket.on(MESSAGES.SEND_MESSAGE, data => this.saveMessage(data));
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
     }
 
-    sendMessage(data, socket) {
-        socket.emit(this.MESSAGES.GET_MESSAGE, data);
+    async saveMessage(data) {
+        if (data) {
+            const { message, token } = data;
+            const user = await this.db.getUserByToken(token);
+            if (user) {
+                console.log(user);
+                console.log(data);
+                const date = new Date();
+                const arr = date.toLocaleString("ru").split(' ');
+                const messageDate = arr[0];
+                const messageTime = arr[1]
+                this.db.addMessage(user.id, message, messageDate, messageTime);
+                const result = {
+                    message: message,
+                    messageTime: messageTime,
+                    login: user.login
+                };
+                this.io.emit(this.MESSAGES.GET_MESSAGE, result);
+            }
+        }
     }
 
-    /*
-const date = new Date();
-        const info = {
-            year: date.getFullYear(),
-            day: date.getDate(),
-            month: date.getMonth(),
-            time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-        };
-    */
 }
 
 module.exports = Chat;

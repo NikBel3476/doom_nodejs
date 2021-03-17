@@ -21,25 +21,32 @@ class DB {
         return user;
     }
 
+    getUserByToken(token) {
+        const user = this.db.get(
+            'SELECT * FROM user WHERE token=?',
+            [token]
+        );
+        return user;
+    }
+
     addUser(login, name, password, token) {
         const result = this.db.run(
-            `INSERT INTO user (login, name, password, token, status) VALUES (?, ?, ?, ?, ?)`,
+            'INSERT INTO user (login, name, password, token, status) VALUES (?, ?, ?, ?, ?)',
             [login, name, password, token, 'online']
         );
         return result;
     }
 
-    addMessage(message, date, userId) {
+    addMessage(id, message, date, time) {
         const result = this.db.run(
-            `INSERT INTO message (date, user_id, message) VALUES (?, ?, ?)`,
-            [date, userId, message]
+            'INSERT INTO message (user_id, message, date, time) VALUES (?,?,?,?)',
+            [id, message, date, time]
         );
-        return result;
     }
 
     updateUserToken(id, token) {
         const result = this.db.run(
-            `UPDATE user SET token=? WHERE id=?`,
+            'UPDATE user SET token=? WHERE id=?',
             [token, id]
         );
         return result;
@@ -47,7 +54,7 @@ class DB {
 
     changeUserStatus(id, status) {
         const result = this.db.run(
-            `UPDATE user SET status=? WHERE id=?`,
+            'UPDATE user SET status=? WHERE id=?',
             [status, id]
         );
         return result;
