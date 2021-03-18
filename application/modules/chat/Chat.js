@@ -18,7 +18,7 @@ class Chat {
             const user = await this.db.getUserByToken(token);
             if (user) {
                 const date = new Date();
-                const arr = date.toLocaleString("ru").split(' ');
+                const arr = date.toLocaleString("ru").split(', ');
                 const messageDate = arr[0];
                 const messageTime = arr[1]
                 this.db.addMessage(user.id, message, messageDate, messageTime);
