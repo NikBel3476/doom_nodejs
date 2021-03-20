@@ -7,6 +7,18 @@ const SETTINGS = {
         SEND_MESSAGE: 'SEND_MESSAGE', // послать сообщение
         LOGIN: 'LOGIN',
         REGISTRATION: 'REGISTRATION'
+    },
+
+    MEDIATOR: {
+        EVENTS: {
+            TEST_EVENT: 'TEST_EVENT',
+            //...
+        },
+        TRIGGERS: {
+            TEST_TRIGGER: 'TEST_TRIGGER',
+            GET_ALL_USERS: 'GET_ALL_USERS'
+            //...
+        }
     }
 };
 

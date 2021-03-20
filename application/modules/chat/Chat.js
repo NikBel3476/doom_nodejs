@@ -1,15 +1,16 @@
-class Chat {
-    constructor({ io, MESSAGES, db }) {
-        this.io = io;
-        this.MESSAGES = MESSAGES;
-        this.users = [];
-        this.db = db;
+const Module = require('../Module');
+
+class Chat extends Module {
+    constructor(options) {
+        super(options);
         // обработчик соединения для КАЖДОГО клиента
-        io.on('connection', socket => {
+        this.io.on('connection', socket => {
             socket.on(MESSAGES.SEND_MESSAGE, data => this.saveMessage(data));
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
+
+        console.log(this.mediator.get(this.TRIGGERS.GET_ALL_USERS));
     }
 
     async saveMessage(data) {
