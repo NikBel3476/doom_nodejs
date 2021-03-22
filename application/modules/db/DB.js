@@ -18,6 +18,7 @@ class DB {
             'SELECT * FROM user WHERE login=?',
             [login]
         );
+        console.log(user);
         return user;
     }
 
@@ -26,6 +27,7 @@ class DB {
             'SELECT * FROM user WHERE token=?',
             [token]
         );
+        console.log(user);
         return user;
     }
 
@@ -42,6 +44,7 @@ class DB {
             'INSERT INTO message (user_id, message, date, time) VALUES (?,?,?,?)',
             [id, message, date, time]
         );
+        return result;
     }
 
     updateUserToken(id, token) {
@@ -52,7 +55,7 @@ class DB {
         return result;
     }
 
-    changeUserStatus(id, status) {
+    updateUserStatus(id, status) {
         const result = this.db.run(
             'UPDATE user SET status=? WHERE id=?',
             [status, id]

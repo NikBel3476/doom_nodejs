@@ -5,7 +5,7 @@ class Chat extends Module {
         super(options);
         // обработчик соединения для КАЖДОГО клиента
         this.io.on('connection', socket => {
-            socket.on(MESSAGES.SEND_MESSAGE, data => this.saveMessage(data));
+            socket.on(this.MESSAGES.SEND_MESSAGE, data => this.saveMessage(data));
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });

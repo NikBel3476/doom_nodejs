@@ -2,6 +2,7 @@ const Module = require('../Module');
 const md5 = require('md5');
 
 class Users extends Module {
+
     constructor(options) {
         super(options);
         this.users = [
@@ -10,8 +11,8 @@ class Users extends Module {
         ];
         // обработчик соединения для КАЖДОГО клиента
         this.io.on('connection', socket => {
-            socket.on(MESSAGES.LOGIN, data => this.login(data, socket));
-            socket.on(MESSAGES.REGISTRATION, data => this.registrtion(data, socket));
+            socket.on(this.MESSAGES.LOGIN, data => this.login(data, socket));
+            socket.on(this.MESSAGES.REGISTRATION, data => this.registrtion(data, socket));
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
@@ -26,7 +27,7 @@ class Users extends Module {
                 if (user && passHash === user.password) {
                     const result = this.db.updateUserToken(user.id, token);
                     if (result) {
-                        this.db.changeUserStatus(user.id, 'online');
+                        this.db.updateUserStatus(user.id, 'online');
                         socket.emit(this.MESSAGES.LOGIN, token);
                     }
                 }
