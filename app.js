@@ -14,12 +14,12 @@ const SETTINGS = require('./settings');
 const { PORT, MESSAGES, MEDIATOR } = SETTINGS;
 
 // application logic
-const Mediator = require('./application/modules/Mediator');
 const DB = require('./application/modules/db/DB');
+const Mediator = require('./application/modules/Mediator');
 const Chat = require('./application/modules/chat/Chat');
 const Users = require('./application/modules/users/Users');
-const mediator = new Mediator(MEDIATOR);
 const db = new DB;
+const mediator = new Mediator(MEDIATOR);
 new Users({ io, MESSAGES, db, mediator });
 new Chat({ io, MESSAGES, db, mediator });
 

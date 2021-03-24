@@ -4,13 +4,14 @@ const { open } = require('sqlite');
 class DB {
 
     constructor() {
+        // sqlite connect to db
         (async () => {
             // open the database
             this.db = await open({
                 filename: './application/modules/db/vm21.db',
                 driver: sqlite3.Database
             })
-        })()
+        })();
     }
 
     getUserByLogin(login) {
@@ -18,7 +19,6 @@ class DB {
             'SELECT * FROM user WHERE login=?',
             [login]
         );
-        console.log(user);
         return user;
     }
 
@@ -28,6 +28,13 @@ class DB {
             [token]
         );
         return user;
+    }
+
+    getAllUsers() {
+        const users = this.db.get(
+            'SELECT * FROM user'
+        );
+        return users;
     }
 
     addUser(login, name, password, token) {

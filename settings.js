@@ -16,7 +16,7 @@ const SETTINGS = {
         },
         TRIGGERS: {
             TEST_TRIGGER: 'TEST_TRIGGER',
-            GET_ALL_USERS: 'GET_ALL_USERS'
+            GET_ALL_USERS: 'GET_ALL_USERS',
             //...
         }
     }

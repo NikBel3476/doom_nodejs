@@ -10,6 +10,7 @@ class Chat extends Module {
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
 
+        this.getAllUsers = this.mediator.get(this.TRIGGERS.GET_ALL_USERS);
         console.log(this.mediator.get(this.TRIGGERS.GET_ALL_USERS));
     }
 
@@ -19,9 +20,9 @@ class Chat extends Module {
             const user = await this.db.getUserByToken(token);
             if (user) {
                 const date = new Date();
-                const arr = date.toLocaleString("ru").split(', ');
+                const arr = date.toLocaleString("ru").split(' ');
                 const messageDate = arr[0];
-                const messageTime = arr[1]
+                const messageTime = arr[1];
                 this.db.addMessage(user.id, message, messageDate, messageTime);
                 const result = {
                     message: message,
