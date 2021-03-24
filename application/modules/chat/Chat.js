@@ -28,6 +28,7 @@ class Chat extends Module {
                     messageTime: messageTime,
                     login: user.login
                 };
+                console.log('message', result);
                 this.io.emit(this.MESSAGES.GET_MESSAGE, result);
             }
         }

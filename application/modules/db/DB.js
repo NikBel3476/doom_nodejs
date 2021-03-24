@@ -27,7 +27,6 @@ class DB {
             'SELECT * FROM user WHERE token=?',
             [token]
         );
-        console.log(user);
         return user;
     }
 
