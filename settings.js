@@ -7,13 +7,16 @@ const SETTINGS = {
         SEND_MESSAGE: 'SEND_MESSAGE', // послать сообщение
         LOGIN: 'LOGIN',
         REGISTRATION: 'REGISTRATION',
+        LOGOUT: 'LOGOUT',
         USER_ONLINE: 'USER_ONLINE', // пользователь успешно авторизовался и стал онлайн
+        USER_OFFLINE: 'USER_OFFLINE', // пользователь успешно разлогинился и стал оффлайн
     },
 
     MEDIATOR: {
         EVENTS: {
             TEST_EVENT: 'TEST_EVENT',
             USER_LOGIN: 'USER_LOGIN', // пользователь авторизовался
+            USER_LOGOUT: 'USER_LOGOUT', // пользователь разлогинился
             //...
         },
         TRIGGERS: {

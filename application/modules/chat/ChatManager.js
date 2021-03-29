@@ -17,10 +17,15 @@ class ChatManager extends Module {
 
         //this.getAllUsers = this.mediator.get(this.TRIGGERS.GET_ALL_USERS);
         this.mediator.subscribe(this.EVENTS.USER_LOGIN, user => this.userLogin(user));
+        this.mediator.subscribe(this.EVENTS.USER_LOGOUT, user => this.userLogout(user));
     }
 
     userLogin(user) {
         this.io.emit(this.MESSAGES.USER_ONLINE, user);
+    }
+
+    userLogout(user) {
+        this.io.emit(this.MESSAGES.USER_OFFLINE, user);
     }
 
     async saveMessage(data) {
@@ -28,14 +33,9 @@ class ChatManager extends Module {
             const { message, token } = data;
             const user = await this.db.getUserByToken(token);
             if (user) {
-                const date = new Date();
-                const arr = date.toLocaleString("ru").split(' ');
-                const messageDate = arr[0];
-                const messageTime = arr[1];
-                this.db.addMessage(user.id, message, messageDate, messageTime);
+                this.db.addMessage(user.id, message);
                 const result = {
                     message,
-                    messageTime,
                     login: user.login
                 };
                 this.io.emit(this.MESSAGES.GET_MESSAGE, result);

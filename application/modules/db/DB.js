@@ -36,15 +36,15 @@ class DB {
 
     addUser(login, name, password, token) {
         return this.db.run(
-            'INSERT INTO user (login, name, password, token, status) VALUES (?, ?, ?, ?, ?)',
-            [login, name, password, token, 'online']
+            'INSERT INTO user (login, name, password, token) VALUES (?, ?, ?, ?)',
+            [login, name, password, token]
         );
     }
 
-    addMessage(id, message, date, time) {
+    addMessage(id, message) {
         return this.db.run(
-            'INSERT INTO message (user_id, message, date, time) VALUES (?,?,?,?)',
-            [id, message, date, time]
+            'INSERT INTO message (user_id, message) VALUES (?,?)',
+            [id, message]
         );
     }
 
@@ -55,10 +55,10 @@ class DB {
         );
     }
 
-    updateUserStatus(id, status) {
+    deleteUserToken(token) {
         return this.db.run(
-            'UPDATE user SET status=? WHERE id=?',
-            [status, id]
+            "UPDATE user SET token='' WHERE token=?",
+            [token]
         );
     }
 }
