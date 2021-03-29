@@ -6,12 +6,14 @@ const SETTINGS = {
         GET_MESSAGE: 'GET_MESSAGE', // получить все сообщения
         SEND_MESSAGE: 'SEND_MESSAGE', // послать сообщение
         LOGIN: 'LOGIN',
-        REGISTRATION: 'REGISTRATION'
+        REGISTRATION: 'REGISTRATION',
+        USER_ONLINE: 'USER_ONLINE', // пользователь успешно авторизовался и стал онлайн
     },
 
     MEDIATOR: {
         EVENTS: {
             TEST_EVENT: 'TEST_EVENT',
+            USER_LOGIN: 'USER_LOGIN', // пользователь авторизовался
             //...
         },
         TRIGGERS: {

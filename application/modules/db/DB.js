@@ -15,58 +15,51 @@ class DB {
     }
 
     getUserByLogin(login) {
-        const user = this.db.get(
+        return this.db.get(
             'SELECT * FROM user WHERE login=?',
             [login]
         );
-        return user;
     }
 
     getUserByToken(token) {
-        const user = this.db.get(
+        return this.db.get(
             'SELECT * FROM user WHERE token=?',
             [token]
         );
-        return user;
     }
 
     getAllUsers() {
-        const users = this.db.get(
+        return this.db.get(
             'SELECT * FROM user'
         );
-        return users;
     }
 
     addUser(login, name, password, token) {
-        const result = this.db.run(
+        return this.db.run(
             'INSERT INTO user (login, name, password, token, status) VALUES (?, ?, ?, ?, ?)',
             [login, name, password, token, 'online']
         );
-        return result;
     }
 
     addMessage(id, message, date, time) {
-        const result = this.db.run(
+        return this.db.run(
             'INSERT INTO message (user_id, message, date, time) VALUES (?,?,?,?)',
             [id, message, date, time]
         );
-        return result;
     }
 
     updateUserToken(id, token) {
-        const result = this.db.run(
+        return this.db.run(
             'UPDATE user SET token=? WHERE id=?',
             [token, id]
         );
-        return result;
     }
 
     updateUserStatus(id, status) {
-        const result = this.db.run(
+        return this.db.run(
             'UPDATE user SET status=? WHERE id=?',
             [status, id]
         );
-        return result;
     }
 }
 

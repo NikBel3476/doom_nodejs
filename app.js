@@ -16,12 +16,12 @@ const { PORT, MESSAGES, MEDIATOR } = SETTINGS;
 // application logic
 const DB = require('./application/modules/db/DB');
 const Mediator = require('./application/modules/Mediator');
-const Chat = require('./application/modules/chat/Chat');
-const Users = require('./application/modules/users/Users');
+const ChatManager = require('./application/modules/chat/ChatManager');
+const UserManager = require('./application/modules/users/UserManager');
 const db = new DB;
 const mediator = new Mediator(MEDIATOR);
-new Users({ io, MESSAGES, db, mediator });
-new Chat({ io, MESSAGES, db, mediator });
+new UserManager({ io, MESSAGES, db, mediator });
+new ChatManager({ io, MESSAGES, db, mediator });
 
 // application routing
 const Router = require('./application/routers/Router');
