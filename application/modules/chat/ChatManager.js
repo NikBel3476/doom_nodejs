@@ -36,7 +36,7 @@ class ChatManager extends Module {
                 this.db.addMessage(user.id, message);
                 const result = {
                     message,
-                    login: user.login
+                    name: user.name
                 };
                 this.io.emit(this.MESSAGES.GET_MESSAGE, result);
             }
