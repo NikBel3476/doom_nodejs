@@ -1,6 +1,14 @@
 const SETTINGS = {
     PORT: 3001,
 
+    DB: {
+        HOST: '',
+        PORT: '',
+        NAME: '',
+        USER: '',
+        PASS: ''
+    },
+
     // все события, котореы есть в сокетах
     MESSAGES: {
         GET_MESSAGE: 'GET_MESSAGE', // получить все сообщения

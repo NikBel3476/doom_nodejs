@@ -34,4 +34,10 @@ app.use(
 
 app.use('/', router);
 
+function deinitModules() {
+    db.destructor();
+}
+
 server.listen(PORT, () => console.log(`Server running at port ${PORT}. http://localhost:3001`));
+
+process.on('SIGINT', deinitModules);
