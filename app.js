@@ -11,14 +11,14 @@ const io = require('socket.io')(server, {
 });
 
 const SETTINGS = require('./settings');
-const { PORT, MESSAGES, MEDIATOR } = SETTINGS;
+const { PORT, MESSAGES, MEDIATOR, DATABASE } = SETTINGS;
 
 // application logic
 const DB = require('./application/modules/db/DB');
 const Mediator = require('./application/modules/Mediator');
 const ChatManager = require('./application/modules/chat/ChatManager');
 const UserManager = require('./application/modules/users/UserManager');
-const db = new DB;
+const db = new DB(DATABASE);
 const mediator = new Mediator(MEDIATOR);
 new UserManager({ io, MESSAGES, db, mediator });
 new ChatManager({ io, MESSAGES, db, mediator });

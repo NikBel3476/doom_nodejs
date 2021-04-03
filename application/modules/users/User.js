@@ -32,7 +32,7 @@ class User {
         }
     }
 
-    async login(data = {}) {
+    async auth(data = {}) {
         const { login, passHash, token, num } = data;
         if (login && passHash && token && num) {
             if (token === md5(passHash + num)) {

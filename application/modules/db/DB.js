@@ -1,13 +1,13 @@
 const { Client } = require('pg');
 
 class DB {
-    constructor() {
+    constructor({ HOST, PORT, NAME, USER, PASS }) {
         this.db = new Client({
-            host: 'localhost',
-            port: 5433,
-            database: 'vm21-db',
-            user: 'vm21-user',
-            password: '123456'
+            host: HOST,
+            port: PORT,
+            database: NAME,
+            user: USER,
+            password: PASS
         });
         // connect to db
         (async () => {
@@ -27,52 +27,78 @@ class DB {
         }
     }
 
-    getUserByLogin(login) {
-        return this.db.get(
-            'SELECT * FROM user WHERE login=?',
+    async getUserByLogin(login) {
+        const result = this.db.query(
+            'SELECT * FROM users WHERE login=$1',
             [login]
         );
+        return (await result).rows[0];
     }
 
-    getUserByToken(token) {
-        return this.db.get(
-            'SELECT * FROM user WHERE token=?',
+    async getUserByToken(token) {
+        const result = this.db.query(
+            'SELECT * FROM users WHERE token=$1',
             [token]
         );
+        return (await result).rows[0];
     }
 
-    getAllUsers() {
-        return this.db.get(
-            'SELECT * FROM user'
+    async getAllUsers() {
+        const result = this.db.query(
+            'SELECT * FROM users'
         );
+        return (await result).rows;
     }
 
-    addUser(login, name, password, token) {
-        return this.db.run(
-            'INSERT INTO user (login, name, password, token) VALUES (?, ?, ?, ?)',
-            [login, name, password, token]
-        );
+    async addUser(login, name, password, token) {
+        try {
+            this.db.query(
+                'INSERT INTO users (login, name, password, token) VALUES ($1, $2, $3, $4)',
+                [login, name, password, token]
+            );
+            return true;
+        } catch (err) {
+            console.log(err.stack);
+        }
     }
 
-    addMessage(id, message) {
-        return this.db.run(
-            'INSERT INTO message (user_id, message) VALUES (?,?)',
-            [id, message]
-        );
+    async addMessage(id, message) {
+        try {
+            this.db.query(
+                'INSERT INTO message (user_id, message) VALUES ($1, $2)',
+                [id, message]
+            );
+            return true;
+        } catch (err) {
+            console.log(err.stack);
+            return false;
+        }
     }
 
     updateUserToken(id, token) {
-        return this.db.run(
-            'UPDATE user SET token=? WHERE id=?',
-            [token, id]
-        );
+        try {
+            this.db.query(
+                'UPDATE users SET token=$1 WHERE id=$2',
+                [token, id]
+            );
+            return true;
+        } catch (err) {
+            console.log(err.stack);
+            return false;
+        }
     }
 
     deleteUserToken(token) {
-        return this.db.run(
-            "UPDATE user SET token='' WHERE token=?",
-            [token]
-        );
+        try {
+            this.db.query(
+                "UPDATE users SET token='' WHERE token=$1",
+                [token]
+            );
+            return true;
+        } catch (err) {
+            console.log(err.stack);
+            return false;
+        }
     }
 }
 

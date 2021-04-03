@@ -21,7 +21,7 @@ class UserManager extends Module {
 
     async login(data, socket) {
         const user = new User(this.db);
-        if (await user.login(data)) {
+        if (await user.auth(data)) {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.LOGIN, user.self().token);
             this.mediator.call(this.EVENTS.USER_LOGIN, user.get());
