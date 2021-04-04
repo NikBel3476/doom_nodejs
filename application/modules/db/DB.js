@@ -12,11 +12,6 @@ class DB {
         // connect to db
         (async () => {
             await this.db.connect();
-
-            const query = 'SELECT * FROM users WHERE id=$1';
-            const result = await this.db.query(query, [2]);
-
-            console.log(result.rows);
         })();
     }
 
@@ -65,7 +60,7 @@ class DB {
     async addMessage(id, message) {
         try {
             this.db.query(
-                'INSERT INTO message (user_id, message) VALUES ($1, $2)',
+                `INSERT INTO messages (user_id, message, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000}))`,
                 [id, message]
             );
             return true;

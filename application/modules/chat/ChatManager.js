@@ -33,12 +33,14 @@ class ChatManager extends Module {
             const { message, token } = data;
             const user = await this.db.getUserByToken(token);
             if (user) {
-                this.db.addMessage(user.id, message);
-                const result = {
-                    message,
-                    name: user.name
-                };
-                this.io.emit(this.MESSAGES.GET_MESSAGE, result);
+                const messAdded = await this.db.addMessage(user.id, message);
+                if (messAdded) {
+                    const result = {
+                        message,
+                        name: user.name
+                    };
+                    this.io.emit(this.MESSAGES.GET_MESSAGE, result);
+                }
             }
         }
     }
