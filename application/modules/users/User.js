@@ -48,13 +48,13 @@ class User {
     }
 
     async registration(data = {}) {
-        const { login, name, passHash, token, num } = data;
-        if (login && name && passHash && token && num && token === md5(passHash + num)) {
+        const { login, nickname, passHash, token, num } = data;
+        if (login && nickname && passHash && token && num && token === md5(passHash + num)) {
             const userData = await this.db.getUserByLogin(login);
             if (!userData) {
-                const result = await this.db.addUser(login, name, passHash, token);
+                const result = await this.db.addUser(login, nickname, passHash, token);
                 if (result) {
-                    this.fill({ login, password: passHash, name, token });
+                    this.fill({ login, password: passHash, nickname, token });
                     return true;
                 }
             }

@@ -21,7 +21,7 @@ class UserManager extends Module {
 
     async login(data, socket) {
         const user = new User(this.db);
-        if (await user.auth(data)) {
+        if (await user.auth(data) && !this.users[user.id]) {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.LOGIN, user.self().token);
             this.mediator.call(this.EVENTS.USER_LOGIN, user.get());
@@ -33,6 +33,7 @@ class UserManager extends Module {
     async registration(data, socket) {
         const user = new User(this.db);
         if (await user.registration(data)) {
+            console.log(user);
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.REGISTRATION, user.self().token);
             this.mediator.call(this.EVENTS.USER_REGISTRATION, user.get());

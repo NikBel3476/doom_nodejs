@@ -18,6 +18,10 @@ const SETTINGS = {
         LOGOUT: 'LOGOUT',
         USER_ONLINE: 'USER_ONLINE', // пользователь успешно авторизовался и стал онлайн
         USER_OFFLINE: 'USER_OFFLINE', // пользователь успешно разлогинился и стал оффлайн
+        CREATE_ROOM: 'CREATE_ROOM',
+        JOIN_ROOM: 'JOIN_ROOM',
+        LEAVE_ROOM: 'LEAVE_ROOM',
+        GET_ROOMS: 'GET_ROOMS'
     },
 
     MEDIATOR: {
@@ -25,6 +29,7 @@ const SETTINGS = {
             TEST_EVENT: 'TEST_EVENT',
             USER_LOGIN: 'USER_LOGIN', // пользователь авторизовался
             USER_LOGOUT: 'USER_LOGOUT', // пользователь разлогинился
+            USER_REGISTRATION: 'USER_REGISTRATION'
             //...
         },
         TRIGGERS: {

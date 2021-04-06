@@ -17,7 +17,10 @@ class ChatManager extends Module {
 
         //this.getAllUsers = this.mediator.get(this.TRIGGERS.GET_ALL_USERS);
         this.mediator.subscribe(this.EVENTS.USER_LOGIN, user => this.userLogin(user));
+        this.mediator.subscribe(this.EVENTS.USER_REGISTRATION, user => this.userLogin(user));
         this.mediator.subscribe(this.EVENTS.USER_LOGOUT, user => this.userLogout(user));
+        this.mediator.subscribe(this.EVENTS.USER_ENTER_ROOM, user => this.userEnterRoom(user));
+        this.mediator.subscribe(this.EVENTS.USER_LEAVE_ROOM, user => this.userLeaveRoom(user));
     }
 
     userLogin(user) {
@@ -26,6 +29,14 @@ class ChatManager extends Module {
 
     userLogout(user) {
         this.io.emit(this.MESSAGES.USER_OFFLINE, user);
+    }
+
+    userEnterRoom(user, room) {
+        this.io.to(room).emit(this.MESSAGES.USER_ENTER_ROOM, user);
+    }
+
+    userLeaveRoom(user, room) {
+        this.io.ro(room).emit(this.MESSAGES.USER_LEAVE_ROOM, user);
     }
 
     async saveMessage(data) {
