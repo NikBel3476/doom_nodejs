@@ -1,4 +1,5 @@
 const { Client } = require('pg');
+const ORM = require('./ORM');
 
 class DB {
     constructor({ HOST, PORT, NAME, USER, PASS }) {
@@ -9,6 +10,7 @@ class DB {
             user: USER,
             password: PASS
         });
+        this.orm = new ORM(this.db);
         // connect to db
         (async () => {
             await this.db.connect();
@@ -29,6 +31,9 @@ class DB {
         );
         return (await result).rows[0];
     }
+    /*getUserByLogin(login) {
+        return this.orm.detail('users', { login });
+    }*/
 
     async getUserByToken(token) {
         const result = this.db.query(
