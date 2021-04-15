@@ -3,10 +3,10 @@ const SETTINGS = {
 
     DATABASE: {
         HOST: 'localhost',
-        PORT: 5433,
+        PORT: 5432,
         NAME: 'vm21-db',
         USER: 'vm21-user',
-        PASS: '123456'
+        PASS: 'postgres'
     },
 
     // все события, котореы есть в сокетах

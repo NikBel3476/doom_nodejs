@@ -9,13 +9,12 @@ class ChatManager extends Module {
             // enter to chat
             // leave chat
             // set online
-
             // set offline
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
 
-        //this.getAllUsers = this.mediator.get(this.TRIGGERS.GET_ALL_USERS);
+        //this. = this.mediator.get(this.TRIGGERS.GET_ALL_USERS);
         this.mediator.subscribe(this.EVENTS.USER_LOGIN, user => this.userLogin(user));
         this.mediator.subscribe(this.EVENTS.USER_REGISTRATION, user => this.userLogin(user));
         this.mediator.subscribe(this.EVENTS.USER_LOGOUT, user => this.userLogout(user));

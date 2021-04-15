@@ -24,82 +24,35 @@ class DB {
         }
     }
 
-    async getUserByLogin(login) {
-        const result = this.db.query(
-            'SELECT * FROM users WHERE login=$1',
-            [login]
-        );
-        return (await result).rows[0];
-    }
-    /*getUserByLogin(login) {
+    getUserByLogin(login) {
         return this.orm.detail('users', { login });
-    }*/
-
-    async getUserByToken(token) {
-        const result = this.db.query(
-            'SELECT * FROM users WHERE token=$1',
-            [token]
-        );
-        return (await result).rows[0];
     }
 
-    async getAllUsers() {
-        const result = this.db.query(
-            'SELECT * FROM users'
-        );
-        return (await result).rows;
+    getUserByToken(token) {
+        return this.orm.detail('users', { token });
     }
 
-    async addUser(login, name, password, token) {
-        try {
-            this.db.query(
-                'INSERT INTO users (login, name, password, token) VALUES ($1, $2, $3, $4)',
-                [login, name, password, token]
-            );
-            return true;
-        } catch (err) {
-            console.log(err.stack);
-        }
+    getAllUsers() {
+        return thistory.orm.list('users');
     }
 
-    async addMessage(id, message) {
-        try {
-            this.db.query(
-                `INSERT INTO messages (user_id, message, date) VALUES ($1, $2, to_timestamp(${Date.now() / 1000}))`,
-                [id, message]
-            );
-            return true;
-        } catch (err) {
-            console.log(err.stack);
-            return false;
-        }
+    addUser(login, name, password, token) {
+        return this.orm.add('users', { login, name, password, token });
     }
 
+    addMessage(id, message) {
+        const date = new Date(Date.now()).toISOString();
+        return this.orm.add('messages', {user_id: id, message, date: date});
+    }
+    
     updateUserToken(id, token) {
-        try {
-            this.db.query(
-                'UPDATE users SET token=$1 WHERE id=$2',
-                [token, id]
-            );
-            return true;
-        } catch (err) {
-            console.log(err.stack);
-            return false;
-        }
+        return this.orm.update('users', { token }, { id });
     }
 
     deleteUserToken(token) {
-        try {
-            this.db.query(
-                "UPDATE users SET token='' WHERE token=$1",
-                [token]
-            );
-            return true;
-        } catch (err) {
-            console.log(err.stack);
-            return false;
-        }
+        return this.orm.update('users', { token: "" }, { token });
     }
+    
 }
 
 module.exports = DB;

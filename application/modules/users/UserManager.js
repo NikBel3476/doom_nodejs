@@ -33,7 +33,6 @@ class UserManager extends Module {
     async registration(data, socket) {
         const user = new User(this.db);
         if (await user.registration(data)) {
-            console.log(user);
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.REGISTRATION, user.self().token);
             this.mediator.call(this.EVENTS.USER_REGISTRATION, user.get());
