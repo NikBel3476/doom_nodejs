@@ -1,4 +1,4 @@
-const Module = require('../Module');
+const Module = require('./Module');
 
 class Rooms extends Module {
     constructor(options) {
@@ -11,23 +11,12 @@ class Rooms extends Module {
             socket.on(this.MESSAGES.GET_ROOMS, () => this.getRooms(socket));
         });
 
-        this.io.of("/").adapter.on('create-room', room => {
-            console.log(`Room ${room} was created`);
-        });
-
         this.io.of("/").adapter.on('delete-room', room => {
             if(room in this.rooms) {
                 delete this.rooms[room];
+                this.io.emit(this.MESSAGES.GET_ROOMS, this.rooms);
             }
             console.log(`Room ${room} was deleted`);
-        });
-
-        this.io.of("/").adapter.on("join-room", (room, id) => {
-            console.log(`socket ${id} has joined room ${room}`);
-        });
-
-        this.io.of("/").adapter.on("leave-room", (room, id) => {
-            console.log(`socket ${id} has leaved room ${room}`);
         });
     }
 
@@ -37,6 +26,7 @@ class Rooms extends Module {
             this.rooms[room] = room;
             socket.join(room);
             data = {result: true, room};
+            this.io.emit(this.MESSAGES.GET_ROOMS, this.rooms);
         }
         socket.emit(this.MESSAGES.CREATE_ROOM, data);
     }

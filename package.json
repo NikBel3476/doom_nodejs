@@ -6,7 +6,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jasmine": "^3.7.0",
     "md5": "^2.3.0",
+    "nodemon": "^2.0.7",
     "pg": "^8.5.1",
     "socket.io": "^4.0.0",
     "sqlite": "^4.0.19",
@@ -14,7 +16,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",

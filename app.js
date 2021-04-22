@@ -18,7 +18,7 @@ const DB = require('./application/modules/db/DB');
 const Mediator = require('./application/modules/Mediator');
 const ChatManager = require('./application/modules/chat/ChatManager');
 const UserManager = require('./application/modules/users/UserManager');
-const Rooms = require('./application/modules/rooms/Rooms');
+const Rooms = require('./application/modules/Rooms');
 const db = new DB(DATABASE);
 const mediator = new Mediator(MEDIATOR);
 new UserManager({ io, MESSAGES, db, mediator });
