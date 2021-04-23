@@ -32,9 +32,23 @@ class User {
         }
     }
 
-    async auth(data = {}) {
-        const { login, passHash, token, num } = data;
-        if (login && passHash && token && num) {
+    // from DB get passHash by login
+    // check md5(passHash + num) === hash
+    // generate token. token = md5(hash + random)
+
+    async auth({ login, hash, num } = {}) {
+        if(login && hash && num) {
+            const userData = await this.db.getUserByLogin(login);
+            if(userData && hash === md5(userData.password + String(num))) {
+                const token = md5(hash + String(Math.round(Math.random() * 1000000)));
+                await this.db.updateUserToken(userData.id, token);
+                this.fill({...userData, token});
+                return true;
+            }
+        }
+        return false;
+
+        /* if (login && passHash && token && num) {
             if (token === md5(passHash + num)) {
                 const userData = await this.db.getUserByLogin(login);
                 if (userData && passHash === userData.password) {
@@ -44,7 +58,7 @@ class User {
                 }
             }
         }
-        return false;
+        return false; */
     }
 
     async registration(data = {}) {
@@ -63,7 +77,7 @@ class User {
     }
 
     async logout(token) {
-        if(token) {
+        if (token) {
             await this.db.deleteUserToken(token);
             return true;
         }
