@@ -11,13 +11,14 @@
     "nodemon": "^2.0.7",
     "pg": "^8.5.1",
     "socket.io": "^4.0.0",
+    "socket.io-client": "^4.0.1",
     "sqlite": "^4.0.19",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {},
   "scripts": {
     "test": "jasmine",
-    "dev": "nodemon app.js"
+    "dev": "jasmine && nodemon app.js"
   },
   "repository": {
     "type": "git",

@@ -47,28 +47,15 @@ class User {
             }
         }
         return false;
-
-        /* if (login && passHash && token && num) {
-            if (token === md5(passHash + num)) {
-                const userData = await this.db.getUserByLogin(login);
-                if (userData && passHash === userData.password) {
-                    await this.db.updateUserToken(userData.id, token);
-                    this.fill({ ...userData, token });
-                    return true;
-                }
-            }
-        }
-        return false; */
     }
 
-    async registration(data = {}) {
-        const { login, nickname, passHash, token, num } = data;
-        if (login && nickname && passHash && token && num && token === md5(passHash + num)) {
+    async registration({ login, nickname, passHash} = {}) {
+        if (login && nickname && passHash) {
             const userData = await this.db.getUserByLogin(login);
             if (!userData) {
-                const result = await this.db.addUser(login, nickname, passHash, token);
+                const result = await this.db.addUser(login, nickname, passHash);
                 if (result) {
-                    this.fill({ login, password: passHash, nickname, token });
+                    this.fill({ login, password: passHash, nickname });
                     return true;
                 }
             }

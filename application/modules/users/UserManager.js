@@ -1,4 +1,3 @@
-const md5 = require('md5');
 const Module = require('../Module');
 const User = require('./User');
 
@@ -6,7 +5,6 @@ class UserManager extends Module {
 
     constructor(options) {
         super(options);
-        this.users = {};
         // обработчик соединения для КАЖДОГО клиента
         this.io.on('connect', (socket) => console.log(`${socket.id} connected`));
         this.io.on('connection', socket => {
@@ -16,6 +14,9 @@ class UserManager extends Module {
 
             socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
+
+        this.users = {};
+        this.rooms = this.mediator.get(this.TRIGGERS.GET_ALL_ROOMS);
         this.mediator.set(this.TRIGGERS.GET_ALL_USERS, () => this.users);
     }
 
@@ -25,9 +26,10 @@ class UserManager extends Module {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.LOGIN, user.self().token);
             this.mediator.call(this.EVENTS.USER_LOGIN, user.get());
-            return;
+            return true;
         }
         socket.emit(this.MESSAGES.LOGIN, false);
+        return false;
     }
 
     async registration(data, socket) {
@@ -36,8 +38,9 @@ class UserManager extends Module {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.REGISTRATION, user.self().token);
             this.mediator.call(this.EVENTS.USER_REGISTRATION, user.get());
-            return;
+            return true;;
         }
+        return false;
     }
 
     async logout(token, socket) {

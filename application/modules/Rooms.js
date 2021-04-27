@@ -16,9 +16,10 @@ class Rooms extends Module {
                 delete this.rooms[room];
                 this.io.emit(this.MESSAGES.GET_ROOMS, this.rooms);
             }
-            console.log(`Room ${room} was deleted`);
         });
-    }
+
+        this.mediator.set(this.TRIGGERS.GET_ALL_ROOMS, () => this.rooms)
+        }
 
     createRoom(room, socket) {
         let data = { result: false };
@@ -37,7 +38,7 @@ class Rooms extends Module {
             socket.join(room);
             data = { result: true, room };
         }
-        socket.emit(this.MESSAGES.JOIN_ROOM, data);
+        socket.emit(this.MESSAGES.JOIN_ROOM, data);dd
     }
 
     leaveRoom(room, socket) {

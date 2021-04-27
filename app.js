@@ -40,6 +40,6 @@ function deinitModules() {
     db.destructor();
 }
 
-server.listen(PORT, () => console.log(`Server running at port ${PORT}. http://localhost:3001`));
+server.listen(PORT, () => console.log(`Server running at port ${PORT}. http://localhost:${PORT}`));
 
 process.on('SIGINT', deinitModules);

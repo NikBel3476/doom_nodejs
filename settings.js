@@ -6,7 +6,7 @@ const SETTINGS = {
         PORT: 5432,
         NAME: 'vm21-db',
         USER: 'vm21-user',
-        PASS: '123456'
+        PASS: 'postgres'
     },
 
     // все события, котореы есть в сокетах
@@ -35,6 +35,7 @@ const SETTINGS = {
         TRIGGERS: {
             TEST_TRIGGER: 'TEST_TRIGGER',
             GET_ALL_USERS: 'GET_ALL_USERS',
+            GET_ALL_ROOMS: 'GET_ALL_ROOMS'
             //...
         }
     }
