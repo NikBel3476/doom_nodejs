@@ -1,4 +1,5 @@
 const SETTINGS = {
+    HOST: 'http://localhost',
     PORT: 3001,
 
     DATABASE: {
@@ -21,7 +22,9 @@ const SETTINGS = {
         CREATE_ROOM: 'CREATE_ROOM',
         JOIN_ROOM: 'JOIN_ROOM',
         LEAVE_ROOM: 'LEAVE_ROOM',
-        GET_ROOMS: 'GET_ROOMS'
+        GET_ROOMS: 'GET_ROOMS',
+        USER_ENTER_CHAT: 'USER_ENTER_CHAT',
+        USER_LEAVE_CHAT: 'USER_LEAVE_CHAT'
     },
 
     MEDIATOR: {
@@ -29,7 +32,9 @@ const SETTINGS = {
             TEST_EVENT: 'TEST_EVENT',
             USER_LOGIN: 'USER_LOGIN', // пользователь авторизовался
             USER_LOGOUT: 'USER_LOGOUT', // пользователь разлогинился
-            USER_REGISTRATION: 'USER_REGISTRATION'
+            USER_REGISTRATION: 'USER_REGISTRATION',
+            USER_ENTER_ROOM: 'USER_ENTER_ROOM',
+            USER_LEAVE_ROOM: 'USER_LEAVE_ROOM'
             //...
         },
         TRIGGERS: {

@@ -30,8 +30,6 @@ describe("Check User class", () => {
     
     //тесты на логаут
     it("user logout", async () => {
-        const token = md5('sadfasf234231123');
-        expect(token).toMatch(/[a-f\d]/);
         expect(
             await user.logout()    
         );

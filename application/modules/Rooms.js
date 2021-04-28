@@ -3,11 +3,10 @@ const Module = require('./Module');
 class Rooms extends Module {
     constructor(options) {
         super(options);
-        this.rooms = {};
         this.io.on('connection', socket => {
-            socket.on(this.MESSAGES.CREATE_ROOM, roomName => this.createRoom(roomName, socket));
-            socket.on(this.MESSAGES.JOIN_ROOM, roomName => this.joinRoom(roomName, socket));
-            socket.on(this.MESSAGES.LEAVE_ROOM, roomName => this.leaveRoom(roomName, socket));
+            socket.on(this.MESSAGES.CREATE_ROOM, data => this.createRoom(data, socket));
+            socket.on(this.MESSAGES.JOIN_ROOM, data => this.joinRoom(data, socket));
+            socket.on(this.MESSAGES.LEAVE_ROOM, data => this.leaveRoom(data, socket));
             socket.on(this.MESSAGES.GET_ROOMS, () => this.getRooms(socket));
         });
 
@@ -18,34 +17,39 @@ class Rooms extends Module {
             }
         });
 
-        this.mediator.set(this.TRIGGERS.GET_ALL_ROOMS, () => this.rooms)
+        this.rooms = {};
+        this.users = this.mediator.get(this.TRIGGERS.GET_ALL_USERS);
+        this.mediator.set(this.TRIGGERS.GET_ALL_ROOMS, () => this.rooms);
         }
 
-    createRoom(room, socket) {
-        let data = { result: false };
-        if (!(room in this.rooms)) {
-            this.rooms[room] = room;
-            socket.join(room);
-            data = { result: true, room };
+    createRoom(data, socket) {
+        let result = { result: false };
+        if (!(data.roomName in this.rooms)) {
+            this.rooms[data.roomName] = data.roomName;
+            socket.join(data.roomName);
+            result = { result: true, room: data.roomName };
             this.io.emit(this.MESSAGES.GET_ROOMS, this.rooms);
+            this.mediator.call(this.EVENTS.USER_ENTER_ROOM, data)
         }
-        socket.emit(this.MESSAGES.CREATE_ROOM, data);
+        socket.emit(this.MESSAGES.CREATE_ROOM, result);
     }
 
-    joinRoom(room, socket) {
-        let data = { result: false };
-        if (room in this.rooms) {
-            socket.join(room);
-            data = { result: true, room };
+    joinRoom(data, socket) {
+        let result = { result: false };
+        if (data.roomName in this.rooms) {
+            socket.join(data.roomName);
+            result = { result: true, room: data.roomName };
+            this.mediator.call(this.EVENTS.USER_ENTER_ROOM, data);
         }
-        socket.emit(this.MESSAGES.JOIN_ROOM, data);dd
+        socket.emit(this.MESSAGES.JOIN_ROOM, result);
     }
 
-    leaveRoom(room, socket) {
+    leaveRoom(data, socket) {
         let result = false;
-        if (room in this.rooms) {
-            socket.leave(room);
+        if (data.roomName in this.rooms) {
+            socket.leave(data.roomName);
             result = true;
+            this.mediator.call(this.EVENTS.USER_LEAVE_ROOM, data);
         }
         socket.emit(this.MESSAGES.LEAVE_ROOM, { result });
     }

@@ -11,7 +11,7 @@ const io = require('socket.io')(server, {
 });
 
 const SETTINGS = require('./settings');
-const { PORT, MESSAGES, MEDIATOR, DATABASE } = SETTINGS;
+const { HOST, PORT, MESSAGES, MEDIATOR, DATABASE } = SETTINGS;
 
 // application logic
 const DB = require('./application/modules/db/DB');
@@ -40,6 +40,6 @@ function deinitModules() {
     db.destructor();
 }
 
-server.listen(PORT, () => console.log(`Server running at port ${PORT}. http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Server running at port ${PORT}. ${HOST}:${PORT}`));
 
 process.on('SIGINT', deinitModules);
