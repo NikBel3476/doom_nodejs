@@ -7,7 +7,7 @@ const SETTINGS = {
         PORT: 5432,
         NAME: 'vm21-db',
         USER: 'vm21-user',
-        PASS: 'postgres'
+        PASS: '123456'
     },
 
     // все события, котореы есть в сокетах

@@ -25,7 +25,6 @@ class UserManager extends Module {
         if (await user.auth(data) && !this.users[user.id]) {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.LOGIN, user.self().token);
-            //this.mediator.call(this.EVENTS.USER_LOGIN, user.get());
             return true;
         }
         socket.emit(this.MESSAGES.LOGIN, false);
@@ -37,7 +36,6 @@ class UserManager extends Module {
         if (await user.registration(data)) {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.REGISTRATION, user.self().token);
-            //this.mediator.call(this.EVENTS.USER_REGISTRATION, user.get());
             return true;;
         }
         return false;
@@ -48,7 +46,6 @@ class UserManager extends Module {
         const userData = await this.db.getUserByToken(token);
         const user = this.users[userData.id];
         if (await user.logout(token)) {
-            //this.mediator.call(this.EVENTS.USER_LOGOUT, user.get());
             delete this.users[userData.id];
             socket.emit(this.MESSAGES.LOGOUT, true);
             return;

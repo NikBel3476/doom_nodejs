@@ -40,9 +40,9 @@ class User {
         if(login && hash && num) {
             const userData = await this.db.getUserByLogin(login);
             if(userData && hash === md5(userData.password + String(num))) {
-                const token = md5(hash + String(Math.round(Math.random() * 1000000)));
+                const token = md5(hash + Math.round(Math.random() * 1000000));
                 await this.db.updateUserToken(userData.id, token);
-                this.fill({...userData, token});
+                this.fill({ ...userData, token });
                 return true;
             }
         }
@@ -51,11 +51,14 @@ class User {
 
     async registration({ login, nickname, passHash} = {}) {
         if (login && nickname && passHash) {
-            const userData = await this.db.getUserByLogin(login);
-            if (!userData) {
+            const data = await this.db.getUserByLogin(login);
+            if (!data) {
                 const result = await this.db.addUser(login, nickname, passHash);
                 if (result) {
-                    this.fill({ login, password: passHash, nickname });
+                    const token = md5(passHash + Math.round(Math.random() * 1000000));
+                    const userData = await this.db.getUserByLogin(login);
+                    await this.db.updateUserToken(userData.id, token);
+                    this.fill({ ...userData, token });
                     return true;
                 }
             }

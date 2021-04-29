@@ -25,10 +25,13 @@ class Rooms extends Module {
     createRoom(data, socket) {
         let result = { result: false };
         if (!(data.roomName in this.rooms)) {
+
             this.rooms[data.roomName] = data.roomName;
             socket.join(data.roomName);
             result = { result: true, room: data.roomName };
+
             this.io.emit(this.MESSAGES.GET_ROOMS, this.rooms);
+
             this.mediator.call(this.EVENTS.USER_ENTER_ROOM, data)
         }
         socket.emit(this.MESSAGES.CREATE_ROOM, result);
