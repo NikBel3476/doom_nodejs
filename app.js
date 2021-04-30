@@ -17,12 +17,14 @@ const { HOST, PORT, MESSAGES, MEDIATOR, DATABASE } = SETTINGS;
 const DB = require('./application/modules/db/DB');
 const Mediator = require('./application/modules/Mediator');
 const ChatManager = require('./application/modules/chat/ChatManager');
+const GameManager = require('./application/modules/game/GameManager');
 const UserManager = require('./application/modules/users/UserManager');
 const Rooms = require('./application/modules/Rooms');
 const db = new DB(DATABASE);
 const mediator = new Mediator(MEDIATOR);
 new UserManager({ io, MESSAGES, db, mediator });
 new ChatManager({ io, MESSAGES, db, mediator });
+new GameManager({ io, MESSAGES, db, mediator });
 new Rooms({ io, MESSAGES, mediator });
 
 // application routing
