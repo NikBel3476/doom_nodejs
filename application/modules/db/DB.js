@@ -33,7 +33,15 @@ class DB {
     }
 
     getAllUsers() {
-        return thistory.orm.list('users');
+        return this.orm.list('users');
+    }
+
+    getGamerByUserToken(token) {
+        const user = this.getUserByToken(token);
+        if (user) {
+            return this.orm.detail('gamers', { id: user.id });
+        }
+        return null;
     }
 
     addUser(login, name, password, token) {
@@ -52,6 +60,8 @@ class DB {
     deleteUserToken(token) {
         return this.orm.update('users', { token: "" }, { token });
     }
+
+
     
 }
 

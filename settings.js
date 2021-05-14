@@ -4,10 +4,10 @@ const SETTINGS = {
 
     DATABASE: {
         HOST: 'localhost',
-        PORT: 5433,
+        PORT: 5432,
         NAME: 'vm21-db',
         USER: 'vm21-user',
-        PASS: '123456'
+        PASS: 'postgres'
     },
 
     // все события, котореы есть в сокетах
@@ -24,7 +24,8 @@ const SETTINGS = {
         LEAVE_ROOM: 'LEAVE_ROOM',
         GET_ROOMS: 'GET_ROOMS',
         USER_ENTER_CHAT: 'USER_ENTER_CHAT',
-        USER_LEAVE_CHAT: 'USER_LEAVE_CHAT'
+        USER_LEAVE_CHAT: 'USER_LEAVE_CHAT',
+        MOVE: 'MOVE'
     },
 
     MEDIATOR: {

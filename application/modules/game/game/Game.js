@@ -1,22 +1,56 @@
 const Gamer = require('./entities/Gamer');
 
+const Direction = Object.freeze({
+    Forward: 0,
+    Back: 1,
+    Right: 2,
+    Left: 3
+})
+
 class Game {
-    constructor({ callbacks } = {}) {
+
+    gamers = [];
+
+    constructor({ callbacks, db } = {}) {
+        this.db = db;
         const { updateCb } = callbacks;
         this.updateCb = updateCb;
         // запустить игру
-        setInterval(() => this.update(), 50);
+        setInterval(() => this.update(), 1000);
     }
 
     join(user) {
+        const token = user.token;
+        const { x, y, z} = this.db.getGamerByUserToken(token);
+        this.gamers.push(new Gamer({ token, x, y, z }));
         //...
         return this.getScene();
     }
-    leave(user) {}
+    
+    leave(user) {
+        const token = user.token;
+        this.gamers = this.gamers.splice(
+            this.gamers.findIndex((gemer) => gamer.token === token), 1);
+    }
     die(gamer) {}
     respawn(gamer) {}
 
-    move(user, direction, speed) {}
+    move(user, direction, speed) {
+        switch (direction) {
+            case Direction.Forward: {
+                
+            }
+            case Direction.Back: {
+
+            }
+            case Direction.Right: {
+
+            }
+            case Direction.Left: {
+
+            }
+        }
+    }
     shot(user, alphaV) {}
     //jump(user) {}
 
