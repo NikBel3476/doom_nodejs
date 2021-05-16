@@ -1,6 +1,5 @@
 class Gamer {
-    constructor({ token, x, y, z }) {
-        this.token = token;
+    constructor({ x, y, z }) {
         this.x = x;
         this.y = y;
         this.z = z;

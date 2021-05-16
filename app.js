@@ -19,13 +19,13 @@ const Mediator = require('./application/modules/Mediator');
 const ChatManager = require('./application/modules/chat/ChatManager');
 const GameManager = require('./application/modules/game/GameManager');
 const UserManager = require('./application/modules/users/UserManager');
-const Rooms = require('./application/modules/Rooms');
+const RoomsManager = require('./application/modules/RoomsManager');
 const db = new DB(DATABASE);
 const mediator = new Mediator(MEDIATOR);
 new UserManager({ io, MESSAGES, db, mediator });
 new ChatManager({ io, MESSAGES, db, mediator });
 new GameManager({ io, MESSAGES, db, mediator });
-new Rooms({ io, MESSAGES, mediator });
+new RoomsManager({ io, MESSAGES, mediator });
 
 // application routing
 const Router = require('./application/routers/Router');

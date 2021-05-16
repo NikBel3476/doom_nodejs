@@ -1,6 +1,6 @@
 const Module = require('./Module');
 
-class Rooms extends Module {
+class RoomsManager extends Module {
     constructor(options) {
         super(options);
         this.io.on('connection', socket => {
@@ -63,4 +63,4 @@ class Rooms extends Module {
 
 }
 
-module.exports = Rooms;
+module.exports = RoomsManager;

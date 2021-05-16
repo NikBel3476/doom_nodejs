@@ -32,7 +32,6 @@ class ChatManager extends Module {
             if (user /* Вставить проверку комнаты */) {
                 const messAdded = await this.db.addMessage(user.id, message);
                 if (messAdded) {
-                    console.log('Я случился!');
                     const result = {
                         message,
                         name: user.name

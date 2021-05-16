@@ -1,8 +1,9 @@
 const md5 = require('md5');
 
 class User {
-    constructor(db) {
+    constructor({ db, socketId }) {
         this.db = db;
+        this.socketId = socketId;
     }
 
     fill({ id, login, password, name, token }) {

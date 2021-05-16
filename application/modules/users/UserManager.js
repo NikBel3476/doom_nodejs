@@ -12,7 +12,16 @@ class UserManager extends Module {
             socket.on(this.MESSAGES.REGISTRATION, data => this.registration(data, socket));
             socket.on(this.MESSAGES.LOGOUT, token => this.logout(token, socket));
 
-            socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
+            socket.on('disconnect', () => {
+                // удаляем юзера, если он отключился, но не сделал логаут
+                for (let id in this.users) {
+                    if (this.users[id].socketId === socket.id) {
+                        delete this.users[id];
+                        break;
+                    }
+                }
+                console.log(`${socket.id} disconnected!`);
+            });
         });
 
         this.users = {};
@@ -21,7 +30,7 @@ class UserManager extends Module {
     }
 
     async login(data, socket) {
-        const user = new User(this.db);
+        const user = new User({ db: this.db, socketId: socket.id });
         if (await user.auth(data) && !this.users[user.id]) {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.LOGIN, user.self().token);
@@ -42,7 +51,6 @@ class UserManager extends Module {
     }
 
     async logout(token, socket) {
-        console.log('logout', token);
         const userData = await this.db.getUserByToken(token);
         const user = this.users[userData.id];
         if (await user.logout(token)) {
