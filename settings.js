@@ -25,7 +25,9 @@ const SETTINGS = {
         GET_ROOMS: 'GET_ROOMS',
         USER_ENTER_CHAT: 'USER_ENTER_CHAT',
         USER_LEAVE_CHAT: 'USER_LEAVE_CHAT',
-        MOVE: 'MOVE'
+        MOVE: 'MOVE',
+        STOPMOVE: 'STOPMOVE',
+        CHANGEDIRECTION: 'CHANGEDIRECTION'
     },
 
     MEDIATOR: {

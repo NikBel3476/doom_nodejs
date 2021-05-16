@@ -29,15 +29,9 @@ describe("Check User class", () => {
     }); */
     
     //тесты на логаут
-    it("user logout", async () => {
+    /* it("user logout", async () => {
         expect(
             await user.logout()    
         );
-    });
+    }); */
 });
-/*  Токен:
-        Длина: 32 символа
-        Содержи только:
-            a, b, ..., f
-            0, 1, ..., 9
-*/ 
