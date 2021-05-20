@@ -13,6 +13,10 @@ class Game {
         const mainInterval = setInterval(() => this.update(), 1000);
     }
 
+    moveGamer(direction, token) {
+        this.gamers[token].move(direction);
+    }
+
     getData() {
         let gamersCount = 0;
         for (let gamer in this.gamers) {

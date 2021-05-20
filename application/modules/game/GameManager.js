@@ -7,17 +7,17 @@ class GameManager extends Module {
 
         this.games = [
             new Game({ 
-                callbacks: { updateCb: (gameData) => {}},
+                callbacks: { updateCb: (gameData) => {} },
                 db: this.db,
                 name: 'firstGame'
             }),
             new Game({ 
-                callbacks: { updateCb: (gameData) => {}},
+                callbacks: { updateCb: (gameData) => {} },
                 db: this.db,
                 name: 'secondGame'
             }),
             new Game({ 
-                callbacks: { updateCb: (gameData) => {}},
+                callbacks: { updateCb: (gameData) => {} },
                 db: this.db,
                 name: 'thirdGame'
             }),
@@ -48,11 +48,12 @@ class GameManager extends Module {
 
     }
 
-    moveGamer({ direction, token }) {
-        console.log(gameName, direction, token);
-        const game = this.games.find((game) => game.name === gameName);
-        if (game) {
-            game.move(direction, token);
+    moveGamer({ gameName, direction, token }) {
+        if (gameName && direction && token) {
+            const game = this.games.find((game) => game.name === gameName);
+            if (game) {
+                game.moveGamer(direction, token);
+            }
         }
     }
 
@@ -62,6 +63,10 @@ class GameManager extends Module {
 
     changeDireciton({ x, y }) {
         
+    }
+
+    getScene() {
+
     }
 }
 

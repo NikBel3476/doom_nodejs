@@ -23,10 +23,10 @@ class Gamer {
                 this.x--;
             }
             case Direction.Right: {
-                this.y++;
+                this.z++;
             }
             case Direction.Left: {
-                this.y--;
+                this.z--;
             }
         }
     }
