@@ -20,14 +20,14 @@ const SETTINGS = {
         USER_ONLINE: 'USER_ONLINE', // пользователь успешно авторизовался и стал онлайн
         USER_OFFLINE: 'USER_OFFLINE', // пользователь успешно разлогинился и стал оффлайн
         CREATE_ROOM: 'CREATE_ROOM',
-        JOIN_ROOM: 'JOIN_ROOM',
+        JOIN_GAME: 'JOIN_GAME',
         LEAVE_ROOM: 'LEAVE_ROOM',
-        GET_ROOMS: 'GET_ROOMS',
+        GET_GAMES: 'GET_GAMES',
         USER_ENTER_CHAT: 'USER_ENTER_CHAT',
         USER_LEAVE_CHAT: 'USER_LEAVE_CHAT',
         MOVE: 'MOVE',
-        STOPMOVE: 'STOPMOVE',
-        CHANGEDIRECTION: 'CHANGEDIRECTION'
+        STOP_MOVE: 'STOP_MOVE',
+        CHANGE_DIRECTION: 'CHANGE_DIRECTION'
     },
 
     MEDIATOR: {

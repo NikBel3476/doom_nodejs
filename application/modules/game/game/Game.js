@@ -1,62 +1,57 @@
 const Gamer = require('./entities/Gamer');
 
-const Direction = Object.freeze({
-    Forward: 0,
-    Back: 1,
-    Right: 2,
-    Left: 3
-})
-
 class Game {
 
-    gamers = [];
+    gamers = {};
 
-    constructor({ callbacks, db } = {}) {
+    constructor({ callbacks, db, name } = {}) {
         this.db = db;
+        this.name = name;
         const { updateCb } = callbacks;
         this.updateCb = updateCb;
         // запустить игру
-        setInterval(() => this.update(), 1000);
+        const mainInterval = setInterval(() => this.update(), 1000);
     }
 
-    join(user) {
-        const token = user.token;
-        const { x, y, z} = this.db.getGamerByUserToken(token);
-        this.gamers.push(new Gamer({ token, x, y, z }));
+    getData() {
+        let gamersCount = 0;
+        for (let gamer in this.gamers) {
+            gamersCount++;
+        }
+        return {
+            name: this.name,
+            gamersCount
+        }
+    }
+
+    join(token) {
+        const x = Math.random();
+        const y = Math.random();
+        const z = Math.random();
+        this.gamers[token] = new Gamer({ x, y, z });
         //...
         return this.getScene();
     }
     
     leave(user) {
-        const token = user.token;
-        this.gamers = this.gamers.splice(
-            this.gamers.findIndex((gemer) => gamer.token === token), 1);
+        if (user.token in this.gamers) {
+            delete this.gamers[user.token];
+            return true;
+        }
+        return false;
     }
+
     die(gamer) {}
+
     respawn(gamer) {}
 
-    move(user, direction, speed) {
-        switch (direction) {
-            case Direction.Forward: {
-                
-            }
-            case Direction.Back: {
-
-            }
-            case Direction.Right: {
-
-            }
-            case Direction.Left: {
-
-            }
-        }
-    }
     shot(user, alphaV) {}
     //jump(user) {}
 
     getScene() {
-        // вернуть сцену
-        return null;
+        return {
+            gamers: this.gamers
+        };
     }
 
     getGameData() {

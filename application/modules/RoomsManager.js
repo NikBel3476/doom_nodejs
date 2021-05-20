@@ -5,9 +5,9 @@ class RoomsManager extends Module {
         super(options);
         this.io.on('connection', socket => {
             socket.on(this.MESSAGES.CREATE_ROOM, data => this.createRoom(data, socket));
-            socket.on(this.MESSAGES.JOIN_ROOM, data => this.joinRoom(data, socket));
-            socket.on(this.MESSAGES.LEAVE_ROOM, data => this.leaveRoom(data, socket));
-            socket.on(this.MESSAGES.GET_ROOMS, () => this.getRooms(socket));
+            // socket.on(this.MESSAGES.JOIN_ROOM, data => this.joinRoom(data, socket));
+            // socket.on(this.MESSAGES.LEAVE_ROOM, data => this.leaveRoom(data, socket));
+            // socket.on(this.MESSAGES.GET_ROOMS, () => this.getRooms(socket));
         });
 
         this.io.of("/").adapter.on('delete-room', room => {

@@ -36,14 +36,6 @@ class DB {
         return this.orm.list('users');
     }
 
-    getGamerByUserToken(token) {
-        const user = this.getUserByToken(token);
-        if (user) {
-            return this.orm.detail('gamers', { id: user.id });
-        }
-        return null;
-    }
-
     addUser(login, name, password, token) {
         return this.orm.add('users', { login, name, password, token });
     }
