@@ -20,7 +20,7 @@ const ChatManager = require('./application/modules/chat/ChatManager');
 const GameManager = require('./application/modules/game/GameManager');
 const UserManager = require('./application/modules/users/UserManager');
 const RoomsManager = require('./application/modules/RoomsManager');
-const db = new DB(DATABASE);
+const db = new DB();
 const mediator = new Mediator(MEDIATOR);
 new UserManager({ io, MESSAGES, db, mediator });
 new ChatManager({ io, MESSAGES, db, mediator });
