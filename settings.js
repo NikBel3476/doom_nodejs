@@ -21,7 +21,7 @@ const SETTINGS = {
         USER_OFFLINE: 'USER_OFFLINE', // пользователь успешно разлогинился и стал оффлайн
         CREATE_ROOM: 'CREATE_ROOM',
         JOIN_GAME: 'JOIN_GAME',
-        LEAVE_ROOM: 'LEAVE_ROOM',
+        LEAVE_GAME: 'LEAVE_GAME',
         GET_GAMES: 'GET_GAMES',
         USER_ENTER_CHAT: 'USER_ENTER_CHAT',
         USER_LEAVE_CHAT: 'USER_LEAVE_CHAT',

@@ -28,7 +28,7 @@ class Game {
         }
     }
 
-    join(token) {
+    joinGame(token) {
         const x = Math.random();
         const y = Math.random();
         const z = Math.random();
@@ -37,9 +37,9 @@ class Game {
         return this.getScene();
     }
     
-    leave(user) {
-        if (user.token in this.gamers) {
-            delete this.gamers[user.token];
+    leaveGame(token) {
+        if (token in this.gamers) {
+            delete this.gamers[token];
             return true;
         }
         return false;

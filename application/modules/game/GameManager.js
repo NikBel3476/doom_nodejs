@@ -30,6 +30,7 @@ class GameManager extends Module {
             socket.on(this.MESSAGES.CHANGE_DIRECTION, (data) => this.changeDireciton(data));
             socket.on(this.MESSAGES.GET_GAMES, () => this.getGames(socket));
             socket.on(this.MESSAGES.JOIN_GAME, (data) => this.joinGame(data, socket));
+            socket.on(this.MESSAGES.LEAVE_GAME, (data) => this.leaveGame(data, socket));
         });
     }
 
@@ -41,11 +42,19 @@ class GameManager extends Module {
 
     joinGame(data, socket) {
         const { gameName, token } = data;
-        const scene = this.games.find((game) => game.name === gameName).join(token);
+        const scene = this.games.find((game) => game.name === gameName).joinGame(token);
         scene ? 
-            socket.emit(this.MESSAGES.JOIN_GAME, { result: true, scene }) :
+            socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene }) :
             socket.emit(this.MESSAGES.JOIN_GAME, { result: false });
 
+    }
+
+    leaveGame({ gameName, token }, socket) {
+        const game = this.games.find((game) => game.name === gameName);
+        if (game) {
+            const result = game.leaveGame(token);
+            socket.emit(this.MESSAGES.LEAVE_GAME, { result });
+        }
     }
 
     moveGamer({ gameName, direction, token }) {
