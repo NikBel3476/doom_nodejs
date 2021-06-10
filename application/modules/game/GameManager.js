@@ -35,25 +35,32 @@ class GameManager extends Module {
     }
 
     getGames(socket) {
-        const games = [];
-        this.games.forEach((game) => { games.push(game.getData()); });
+        const games = this.games.map((elem) => elem.getData());
         socket.emit(this.MESSAGES.GET_GAMES, games);
     }
 
     joinGame(data, socket) {
         const { gameName, token } = data;
         const scene = this.games.find((game) => game.name === gameName).joinGame(token);
-        scene ? 
-            socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene }) :
-            socket.emit(this.MESSAGES.JOIN_GAME, { result: false });
+        if (scene) {
+            const games = this.games.map((elem) => elem.getData());
+            this.io.emit(this.MESSAGES.GET_GAMES, games);
+            return socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene });
+        }
+        return socket.emit(this.MESSAGES.JOIN_GAME, { result: false });
     }
 
     leaveGame({ gameName, token }, socket) {
         const game = this.games.find((game) => game.name === gameName);
         if (game) {
             const result = game.leaveGame(token);
-            socket.emit(this.MESSAGES.LEAVE_GAME, { result });
+            if (result) {
+                const games = this.games.map((elem) => elem.getData());
+                this.io.emit(this.MESSAGES.GET_GAMES, games);
+                return socket.emit(this.MESSAGES.LEAVE_GAME, { result });
+            }
         }
+        return socket.emit(this.MESSAGES.LEAVE_GAME, { result: false });
     }
 
     moveGamer({ gameName, direction, token }) {

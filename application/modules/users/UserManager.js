@@ -60,8 +60,8 @@ class UserManager extends Module {
         const userData = await this.db.getUserByToken(token);
         const user = this.users[userData.id];
         if (user) {
-            if (await user.logout(token)) {
-                delete this.users[userData.id];
+            if (await user.logout()) {
+                delete this.users[user.id];
                 socket.emit(this.MESSAGES.LOGOUT, true);
                 return;
             }
