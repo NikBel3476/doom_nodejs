@@ -47,7 +47,7 @@ class UserManager extends Module {
     }
     
     async registration(data, socket) {
-        const user = new User(this.db);
+        const user = new User({ db: this.db, socketId: socket.id });
         if (await user.registration(data)) {
             this.users[user.id] = user;
             socket.emit(this.MESSAGES.REGISTRATION, user.self().token);

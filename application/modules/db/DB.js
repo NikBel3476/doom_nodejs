@@ -17,7 +17,7 @@ class DB {
 
     getUserByLogin(login) {
         const user = this.db.get(
-            'SELECT * FROM user WHERE login=?',
+            'SELECT * FROM users WHERE login=?',
             [login]
         );
         return user;
@@ -25,7 +25,7 @@ class DB {
 
     getUserByToken(token) {
         const user = this.db.get(
-            'SELECT * FROM user WHERE token=?',
+            'SELECT * FROM users WHERE token=?',
             [token]
         );
         return user;
@@ -33,22 +33,22 @@ class DB {
 
     getAllUsers() {
         const users = this.db.get(
-            'SELECT * FROM user'
+            'SELECT * FROM users'
         );
         return users;
     }
 
     addUser(login, name, password, token) {
         const result = this.db.run(
-            'INSERT INTO user (login, name, password, token, status) VALUES (?, ?, ?, ?, ?)',
-            [login, name, password, token, 'online']
+            'INSERT INTO users (login, name, password, token) VALUES (?, ?, ?, ?)',
+            [login, name, password, token]
         );
         return result;
     }
 
     addMessage(id, message, date, time) {
         const result = this.db.run(
-            'INSERT INTO message (user_id, message, date, time) VALUES (?,?,?,?)',
+            'INSERT INTO messages (user_id, message, date, time) VALUES (?,?,?,?)',
             [id, message, date, time]
         );
         return result;
@@ -56,7 +56,7 @@ class DB {
 
     updateUserToken(id, token) {
         const result = this.db.run(
-            'UPDATE user SET token=? WHERE id=?',
+            'UPDATE users SET token=? WHERE id=?',
             [token, id]
         );
         return result;
@@ -64,7 +64,7 @@ class DB {
 
     getNames() {
         const result = this.db.all(
-            'SELECT name FROM user'
+            'SELECT name FROM users'
         );
         return result;
     }
