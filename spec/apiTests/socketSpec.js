@@ -26,10 +26,10 @@ describe('check socket requests', () => {
         });
     });
 
-    afterEach((done) => {
+    afterEach((done) => { 
         if (socket.connected) {
             console.log('disconnecting');
-            socket.disconnect();
+            socket.disconnect(); 
         } else {
             console.log('no connection to break...');
         }

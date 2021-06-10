@@ -11,6 +11,7 @@ class UserManager extends Module {
             socket.on(this.MESSAGES.LOGIN, data => this.login(data, socket));
             socket.on(this.MESSAGES.REGISTRATION, data => this.registration(data, socket));
             socket.on(this.MESSAGES.LOGOUT, token => this.logout(token, socket));
+            socket.on(this.MESSAGES.GET_NAMES, () => this.getNames(socket))
 
             socket.on('disconnect', () => {
                 // удаляем юзера, если он отключился, но не сделал логаут
@@ -27,6 +28,11 @@ class UserManager extends Module {
         this.users = {};
         this.rooms = this.mediator.get(this.TRIGGERS.GET_ALL_ROOMS);
         this.mediator.set(this.TRIGGERS.GET_ALL_USERS, () => this.users);
+    }
+
+    async getNames(socket) {
+        const userNames = await this.db.getNames();
+        socket.emit(this.MESSAGES.GET_NAMES, userNames);
     }
 
     async login(data, socket) {

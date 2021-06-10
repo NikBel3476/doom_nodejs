@@ -28,7 +28,8 @@ const SETTINGS = {
         MOVE: 'MOVE',
         STOP_MOVE: 'STOP_MOVE',
         CHANGE_DIRECTION: 'CHANGE_DIRECTION',
-        GET_SCENE: 'GET_SCENE'
+        GET_SCENE: 'GET_SCENE',
+        GET_NAMES: 'GET_NAMES'
     },
 
     MEDIATOR: {

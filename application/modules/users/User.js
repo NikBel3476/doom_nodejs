@@ -74,6 +74,10 @@ class User {
         }
         return false;
     }
+
+    move() {
+        return null;
+    }
 }
 
 module.exports = User;

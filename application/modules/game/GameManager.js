@@ -46,7 +46,6 @@ class GameManager extends Module {
         scene ? 
             socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene }) :
             socket.emit(this.MESSAGES.JOIN_GAME, { result: false });
-
     }
 
     leaveGame({ gameName, token }, socket) {
