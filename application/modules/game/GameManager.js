@@ -31,6 +31,10 @@ class GameManager extends Module {
             socket.on(this.MESSAGES.GET_GAMES, () => this.getGames(socket));
             socket.on(this.MESSAGES.JOIN_GAME, (data) => this.joinGame(data, socket));
             socket.on(this.MESSAGES.LEAVE_GAME, (data) => this.leaveGame(data, socket));
+
+            socket.on('disconnect', () => {
+               
+            });
         });
     }
 

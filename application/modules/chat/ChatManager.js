@@ -6,7 +6,7 @@ class ChatManager extends Module {
         // обработчик соединения для КАЖДОГО клиента
         this.io.on('connection', socket => {
             socket.on(this.MESSAGES.SEND_MESSAGE, data => this.saveMessage(data));
-            socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
+            // socket.on('disconnect', () => console.log(`${socket.id} disconnected!`));
         });
 
         this.rooms = this.mediator.get(this.TRIGGERS.GET_ALL_ROOMS);

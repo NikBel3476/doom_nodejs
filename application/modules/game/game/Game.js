@@ -2,11 +2,10 @@ const Gamer = require('./entities/Gamer');
 
 class Game {
 
-    gamers = {};
-
     constructor({ callbacks, db, name } = {}) {
         this.db = db;
         this.name = name;
+        this.gamers = {};
         const { updateCb } = callbacks;
         this.updateCb = updateCb;
         // запустить игру
