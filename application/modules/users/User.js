@@ -69,7 +69,7 @@ class User {
 
     async logout(token) {
         if (token) {
-            await this.db.deleteUserToken(token);
+            await this.db.updateUserToken(null);
             return true;
         }
         return false;
