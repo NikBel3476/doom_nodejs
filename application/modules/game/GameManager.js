@@ -31,12 +31,24 @@ class GameManager extends Module {
             socket.on(this.MESSAGES.GET_GAMES, () => this.getGames(socket));
             socket.on(this.MESSAGES.JOIN_GAME, (data) => this.joinGame(data, socket));
             socket.on(this.MESSAGES.LEAVE_GAME, (data) => this.leaveGame(data, socket));
+            socket.on(this.MESSAGES.SPEED_UP, () => this.speedUp(socket));
+            socket.on(this.MESSAGES.SPEED_DOWN, () => this.speedDown(socket));
 
             socket.on('disconnect', () => {
                
             });
         });
     }
+
+
+    speedUp(socket) {
+        socket.emit(this.MESSAGES.SPEED_CHANGE, {result: 'up'});
+    }
+
+    speedDown(socket) {
+        socket.emit(this.MESSAGES.SPEED_CHANGE, {result: 'down'});
+    }
+
 
     getGames(socket) {
         const games = this.games.map((elem) => elem.getData());

@@ -29,7 +29,10 @@ const SETTINGS = {
         STOP_MOVE: 'STOP_MOVE',
         CHANGE_DIRECTION: 'CHANGE_DIRECTION',
         GET_SCENE: 'GET_SCENE',
-        GET_NAMES: 'GET_NAMES'
+        GET_NAMES: 'GET_NAMES',
+        SPEED_UP: 'SPEED_UP',
+        SPEED_DOWN: 'SPEED_DOWN',
+        SPEED_CHANGE: 'SPEED_CHANGE'
     },
 
     MEDIATOR: {
