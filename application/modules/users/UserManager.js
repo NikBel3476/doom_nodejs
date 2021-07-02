@@ -26,6 +26,8 @@ class UserManager extends Module {
         });
 
         this.users = {};
+        this.authAttemptsAmount = {};
+        this.bannedUsers = {};
         this.rooms = this.mediator.get(this.TRIGGERS.GET_ALL_ROOMS);
         this.mediator.set(this.TRIGGERS.GET_ALL_USERS, () => this.users);
     }
@@ -35,14 +37,43 @@ class UserManager extends Module {
         socket.emit(this.MESSAGES.GET_NAMES, userNames);
     }
 
+    timeoutBan(login) {
+        this.bannedUsers[login] = true;
+        console.log(this.bannedUsers);
+        setTimeout(() => this.unban(login), 5000);
+        console.log(`Пользователь ${login} заблокирован`);
+    }
+
+    unban(login) {
+        delete this.bannedUsers[login];
+        console.log(`Пользователь ${login} разблокирован`);
+
+    }
+
     async login(data, socket) {
         const user = new User({ db: this.db, socketId: socket.id });
-        if (await user.auth(data) && !this.users[user.id]) {
-            this.users[user.id] = user;
-            socket.emit(this.MESSAGES.LOGIN, user.self().token);
-            return true;
+        if (await user.auth(data)) {
+            if (data.login in this.bannedUsers) {
+                socket.emit(this.MESSAGES.LOGIN, {result: false, text: 'Временная блокировка'})
+                return false;
+            }
+            if (!this.users[user.id]) {
+                this.users[user.id] = user;
+                socket.emit(this.MESSAGES.LOGIN, { result: true, token: user.self().token });
+                return true;
+            }
+        } else {
+            if (data.login in this.authAttemptsAmount) {
+                this.authAttemptsAmount[data.login]++;
+            } else {
+                this.authAttemptsAmount[data.login] = 1;
+            }
+            console.log(`${data.login} : ${this.authAttemptsAmount[data.login]} attempts`);
+            if (this.authAttemptsAmount[data.login] >= 3) {
+                this.timeoutBan(data.login);
+            }       
         }
-        socket.emit(this.MESSAGES.LOGIN, false);
+        socket.emit(this.MESSAGES.LOGIN, { result: false });
         return false;
     }
     
