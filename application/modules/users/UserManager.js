@@ -11,7 +11,9 @@ class UserManager extends Module {
             socket.on(this.MESSAGES.LOGIN, data => this.login(data, socket));
             socket.on(this.MESSAGES.REGISTRATION, data => this.registration(data, socket));
             socket.on(this.MESSAGES.LOGOUT, token => this.logout(token, socket));
-            socket.on(this.MESSAGES.GET_NAMES, () => this.getNames(socket))
+            socket.on(this.MESSAGES.GET_NAMES, () => this.getNames(socket));
+            socket.on(this.MESSAGES.CHANGE_PASSWORD, ({ login, oldHash, newHash }) => this.changePassword({ login, oldHash, newHash }, socket));
+
 
             socket.on('disconnect', () => {
                 // удаляем юзера, если он отключился, но не сделал логаут
@@ -47,16 +49,26 @@ class UserManager extends Module {
     unban(login) {
         delete this.bannedUsers[login];
         console.log(`Пользователь ${login} разблокирован`);
+    }
 
+    async changePassword({ login, oldHash, newHash }, socket) {
+        const userData = await this.db.getUserByLogin(login);
+        console.log(userData);
+        if (userData && oldHash === userData.password) {
+            const result = this.db.updateUserPassword(userData.id, newHash);
+            result ? 
+                socket.emit(this.MESSAGES.CHANGE_PASSWORD, { result: true }) :
+                socket.emit(this.MESSAGES.CHANGE_PASSWORD, { result: false })
+        }
     }
 
     async login(data, socket) {
         const user = new User({ db: this.db, socketId: socket.id });
+        if (data.login in this.bannedUsers) {
+            socket.emit(this.MESSAGES.LOGIN, {result: false, text: 'Временная блокировка'})
+            return false;
+        }
         if (await user.auth(data)) {
-            if (data.login in this.bannedUsers) {
-                socket.emit(this.MESSAGES.LOGIN, {result: false, text: 'Временная блокировка'})
-                return false;
-            }
             if (!this.users[user.id]) {
                 this.users[user.id] = user;
                 socket.emit(this.MESSAGES.LOGIN, { result: true, token: user.self().token });

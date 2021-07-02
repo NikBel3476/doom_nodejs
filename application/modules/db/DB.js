@@ -62,6 +62,14 @@ class DB {
         return result;
     }
 
+    updateUserPassword(id, newPassword) {
+        const result = this.db.run(
+            'UPDATE users SET password=? WHERE id=?',
+            [newPassword, id]
+        );
+        return result;
+    }
+
     getNames() {
         const result = this.db.all(
             'SELECT name FROM users'

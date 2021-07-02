@@ -32,7 +32,8 @@ const SETTINGS = {
         GET_NAMES: 'GET_NAMES',
         SPEED_UP: 'SPEED_UP',
         SPEED_DOWN: 'SPEED_DOWN',
-        SPEED_CHANGE: 'SPEED_CHANGE'
+        SPEED_CHANGE: 'SPEED_CHANGE',
+        CHANGE_PASSWORD: 'CHANGE_PASSWORD'
     },
 
     MEDIATOR: {
