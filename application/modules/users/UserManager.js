@@ -13,6 +13,7 @@ class UserManager extends Module {
             socket.on(this.MESSAGES.LOGOUT, token => this.logout(token, socket));
             socket.on(this.MESSAGES.GET_NAMES, () => this.getNames(socket));
             socket.on(this.MESSAGES.CHANGE_PASSWORD, ({ login, oldHash, newHash }) => this.changePassword({ login, oldHash, newHash }, socket));
+            socket.on(this.MESSAGES.LOGOUT_ALL_USERS, ({ secretWord }) => this.logoutAllUsers(secretWord, socket));
 
 
             socket.on('disconnect', () => {
@@ -110,6 +111,13 @@ class UserManager extends Module {
             }
         }
         socket.emit(this.MESSAGES.LOGOUT, false);
+    }
+
+    async logoutAllUsers(secretWord, socket) {
+        if (secretWord === "logout") {
+            return this.io.emit(this.MESSAGES.LOGOUT, true);
+        }
+        return socket.emit(this.MESSAGES.LOGOUT_ALL_USERS, { data: "Неверное кодовое слово"});
     }
 
     async getAllUsers() {
