@@ -20,8 +20,7 @@ class GameManager extends Module {
                 callbacks: { updateCb: (gameData) => {} },
                 db: this.db,
                 name: 'thirdGame'
-            }),
-            //new Game({ callbacks: { updateCb: (gameData) => {}} })
+            })
         ];
 
         this.io.on('connection', socket => {

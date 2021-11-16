@@ -10,7 +10,6 @@
     "jasmine": "^3.10.0",
     "md5": "^2.3.0",
     "nodemon": "^2.0.15",
-    "pg": "^8.7.1",
     "socket.io": "^4.3.2",
     "socket.io-client": "^4.3.2",
     "sqlite": "^4.0.23",
