@@ -1,13 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const http = require('http');
+const bodyParser = require('body-parser');
+const cookie = require('cookie');
+
 const app = express(); // create server
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
     cors: {
         origin: "http://localhost:4200",
         methods: ["GET", "POST"],
+        credentials: true
     }
+});
+
+io.use((socket, next) => {
+    if (socket.handshake.headers?.cookie) {
+        socket.cookie = cookie.parse(socket.handshake.headers.cookie);
+    }
+    return next();
 });
 
 const SETTINGS = require('./settings');
@@ -39,7 +49,7 @@ app.use(
 app.use('/', router);
 
 function deinitModules() {
-    db.destructor();
+    // db.destructor();
 }
 
 server.listen(PORT, () => console.log(`Server running at port ${PORT}. ${HOST}:${PORT}`));

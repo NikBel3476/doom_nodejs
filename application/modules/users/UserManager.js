@@ -66,14 +66,12 @@ class UserManager extends Module {
     async login(data, socket) {
         const user = new User({ db: this.db, socketId: socket.id });
         if (data.login in this.bannedUsers) {
-            socket.emit(this.MESSAGES.LOGIN, {result: false, text: 'Временная блокировка'})
-            return false;
+            return socket.emit(this.MESSAGES.LOGIN, { result: false, text: 'Временная блокировка' });
         }
         if (await user.auth(data)) {
             if (!this.users[user.id]) {
                 this.users[user.id] = user;
-                socket.emit(this.MESSAGES.LOGIN, { result: true, token: user.self().token });
-                return true;
+                return socket.emit(this.MESSAGES.LOGIN, { result: true, token: user.self().token });
             }
         } else {
             if (data.login in this.authAttemptsAmount) {
