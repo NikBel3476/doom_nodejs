@@ -12,13 +12,13 @@ const SETTINGS = {
 
     // все события, котореы есть в сокетах
     MESSAGES: {
-        GET_MESSAGE: 'GET_MESSAGE', // получить все сообщения
-        SEND_MESSAGE: 'SEND_MESSAGE', // послать сообщение
+        GET_MESSAGE: 'GET_MESSAGE',
+        SEND_MESSAGE: 'SEND_MESSAGE',
         LOGIN: 'LOGIN',
         REGISTRATION: 'REGISTRATION',
         LOGOUT: 'LOGOUT',
-        USER_ONLINE: 'USER_ONLINE', // пользователь успешно авторизовался и стал онлайн
-        USER_OFFLINE: 'USER_OFFLINE', // пользователь успешно разлогинился и стал оффлайн
+        USER_ONLINE: 'USER_ONLINE',
+        USER_OFFLINE: 'USER_OFFLINE',
         CREATE_ROOM: 'CREATE_ROOM',
         JOIN_GAME: 'JOIN_GAME',
         LEAVE_GAME: 'LEAVE_GAME',
@@ -40,18 +40,16 @@ const SETTINGS = {
     MEDIATOR: {
         EVENTS: {
             TEST_EVENT: 'TEST_EVENT',
-            USER_LOGIN: 'USER_LOGIN', // пользователь авторизовался
-            USER_LOGOUT: 'USER_LOGOUT', // пользователь разлогинился
+            USER_LOGIN: 'USER_LOGIN',
+            USER_LOGOUT: 'USER_LOGOUT',
             USER_REGISTRATION: 'USER_REGISTRATION',
             USER_ENTER_ROOM: 'USER_ENTER_ROOM',
             USER_LEAVE_ROOM: 'USER_LEAVE_ROOM'
-            //...
         },
         TRIGGERS: {
             TEST_TRIGGER: 'TEST_TRIGGER',
             GET_ALL_USERS: 'GET_ALL_USERS',
             GET_ALL_ROOMS: 'GET_ALL_ROOMS'
-            //...
         }
     }
 };

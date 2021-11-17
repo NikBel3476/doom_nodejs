@@ -8,10 +8,8 @@ class Game {
         this.gamers = {};
         const { updateCb } = callbacks;
         this.updateCb = updateCb;
-        // запустить игру
-        const mainInterval = setInterval(() => this.update(), 1000);
+        const mainLoop = setInterval(() => this.update(), 1000);
     }
-
 
     changeCameraRotationGamer( rotationParams, token) {
         this.gamers[token].changeCameraRotation(rotationParams);
@@ -26,23 +24,18 @@ class Game {
     }
 
     getData() {
-        let gamersCount = 0;
-        for (let gamer in this.gamers) {
-            gamersCount++;
-        }
         return {
             name: this.name,
-            gamersCount
+            gamersCount: Object.keys(this.gamers).length
         }
     }
 
     joinGame(token) {
-        const x = 5 //Math.random();
-        const y = 10 //Math.random();
-        const z = 30 //Math.random();
-        this.gamers[token] = new Gamer({ x, y, z });
-        //...
-        return this.getScene();
+        const x = 5;
+        const y = 10;
+        const z = 30;
+        this.gamers[token] = new Gamer({ x, y, z }, 100);
+        return this.getData();
     }
     
     leaveGame(token) {
@@ -57,7 +50,7 @@ class Game {
 
     respawn(gamer) {}
 
-    shot(user, alphaV) {}
+    shoot(user, alphaV) {}
     //jump(user) {}
 
     getScene() {
@@ -68,7 +61,9 @@ class Game {
 
     getGameData() {
         // вернуть позиции игроков и выстрелов
-        return null;
+        return {
+            gamers: this.gamers
+        };
     }
 
     update() {

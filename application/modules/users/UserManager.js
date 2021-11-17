@@ -15,11 +15,9 @@ class UserManager extends Module {
             socket.on(this.MESSAGES.CHANGE_PASSWORD, ({ login, oldHash, newHash }) => this.changePassword({ login, oldHash, newHash }, socket));
             socket.on(this.MESSAGES.LOGOUT_ALL_USERS, ({ secretWord }) => this.logoutAllUsers(secretWord, socket));
 
-
             socket.on('disconnect', () => {
-                // удаляем юзера, если он отключился, но не сделал логаут
                 for (let id in this.users) {
-                    if (this.users[id].socketId === socket.id) {
+                    if (id === socket.id) {
                         delete this.users[id];
                         break;
                     }
@@ -64,13 +62,14 @@ class UserManager extends Module {
     }
 
     async login(data, socket) {
-        const user = new User({ db: this.db, socketId: socket.id });
+        const user = new User({ db: this.db });
         if (data.login in this.bannedUsers) {
             return socket.emit(this.MESSAGES.LOGIN, { result: false, text: 'Временная блокировка' });
         }
         if (await user.auth(data)) {
-            if (!this.users[user.id]) {
-                this.users[user.id] = user;
+            if (!this.users[socket.id]) {
+                this.users[socket.id] = user;
+                console.log(`${user.name} авторизовался`);
                 return socket.emit(this.MESSAGES.LOGIN, { result: true, token: user.self().token });
             }
         } else {
@@ -84,31 +83,24 @@ class UserManager extends Module {
                 this.timeoutBan(data.login);
             }       
         }
-        socket.emit(this.MESSAGES.LOGIN, { result: false });
-        return false;
+        return socket.emit(this.MESSAGES.LOGIN, { result: false });
     }
     
     async registration(data, socket) {
         const user = new User({ db: this.db, socketId: socket.id });
         if (await user.registration(data)) {
             this.users[user.id] = user;
-            socket.emit(this.MESSAGES.REGISTRATION, user.self().token);
-            return true;;
+            return socket.emit(this.MESSAGES.REGISTRATION, user.self().token);
         }
         return false;
     }
 
     async logout(token, socket) {
-        const userData = await this.db.getUserByToken(token);
-        const user = this.users[userData.id];
-        if (user) {
-            if (await user.logout()) {
-                delete this.users[user.id];
-                socket.emit(this.MESSAGES.LOGOUT, true);
-                return;
-            }
+        if (this.users[socket.id]) {
+            delete this.users[socket.id];
+            return socket.emit(this.MESSAGES.LOGOUT, true);
         }
-        socket.emit(this.MESSAGES.LOGOUT, false);
+        return socket.emit(this.MESSAGES.LOGOUT, false);
     }
 
     async logoutAllUsers(secretWord, socket) {

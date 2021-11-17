@@ -50,10 +50,9 @@ class GameManager extends Module {
             for(let gamer in game) {
                 if(gamer) {
                     
-                };
-            };
-        };
-        
+                }
+            }
+        }
     }
 
     changePosition(data) {
@@ -64,10 +63,9 @@ class GameManager extends Module {
             for(let gamer in game) {
                 if(gamer) {
                     
-                };
-            };
-        };
-        
+                }
+            }
+        }
     }
 
     speedUp(socket) {
@@ -86,11 +84,12 @@ class GameManager extends Module {
 
     joinGame(data, socket) {
         const { gameName, token } = data;
-        const scene = this.games.find((game) => game.name === gameName).joinGame(token);
-        if (scene) {
-            const games = this.games.map((elem) => elem.getData());
+        const game = this.games.find((game) => game.name === gameName);
+        if (game) {
+            game.joinGame(token);
+            const games = this.games.map((game) => game.getData());
             this.io.emit(this.MESSAGES.GET_GAMES, games);
-            return socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene });
+            return socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene: game.getScene() });
         }
         return socket.emit(this.MESSAGES.JOIN_GAME, { result: false });
     }

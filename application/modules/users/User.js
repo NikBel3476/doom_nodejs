@@ -1,9 +1,8 @@
 const md5 = require('md5');
 
 class User {
-    constructor({ db, socketId }) {
+    constructor({ db }) {
         this.db = db;
-        this.socketId = socketId;
     }
 
     fill({ id, login, password, name, token }) {
@@ -32,10 +31,6 @@ class User {
             name: this.name
         }
     }
-
-    // from DB get passHash by login
-    // check md5(passHash + num) === hash
-    // generate token. token = md5(hash + random)
 
     async auth({ login, hash, num } = {}) {
         if(login && hash && num) {
@@ -68,11 +63,7 @@ class User {
     }
 
     async logout() {
-        if (this.token) {
-            await this.db.updateUserToken(this.id, null);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     move() {
