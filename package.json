@@ -1,21 +1,22 @@
 {
   "name": "doom_nodejs",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "cookie": "^0.4.1",
+    "cookie": "^0.5.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "jasmine": "^3.10.0",
+    "express": "^4.18.2",
     "md5": "^2.3.0",
-    "nodemon": "^2.0.15",
-    "socket.io": "^4.3.2",
-    "socket.io-client": "^4.3.2",
-    "sqlite": "^4.0.23",
-    "sqlite3": "^5.0.2"
+    "socket.io": "^4.5.4",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jasmine": "^4.5.0",
+    "nodemon": "^2.0.20",
+    "socket.io-client": "^4.5.4"
+  },
   "scripts": {
     "test": "jasmine",
     "dev": "nodemon app.js"
